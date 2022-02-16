@@ -1,21 +1,15 @@
 import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
-
-type DataProps = {
-  id: number,
-  name: string,
-  image: string,
-  description: string,
-};
+import {Film} from '../../types/film';
 
 type PageContentProps = {
-  cardsData: DataProps[]
+  filmsData: Film[]
 }
 
-function PageContent ({cardsData}:PageContentProps):JSX.Element {
+function PageContent({filmsData}: PageContentProps): JSX.Element {
   return (
     <div className="page-content">
-      <Catalog cardsData = {cardsData}/>
+      <Catalog filmCardsData={filmsData} />
       <Footer />
     </div>
   );

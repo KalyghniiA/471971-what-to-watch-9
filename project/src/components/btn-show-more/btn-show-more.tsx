@@ -1,6 +1,8 @@
-function BtnShowMore ():JSX.Element {
+function BtnShowMore(): JSX.Element {
   return (
-    <button className="catalog__button" type="button">Show more</button>
+    <div className="catalog__more">
+      <button className="catalog__button" type="button">Show more</button>
+    </div>
   );
 }
 

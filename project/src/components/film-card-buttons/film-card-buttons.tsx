@@ -1,17 +1,20 @@
-import BtnPlay from '../btn-play/btn-play';
-import BtnAddList from '../btn-add-list/btn-add-list';
-import BtnAddReview from '../btn-add-review/btn-add-review';
 
-type FilmCardButtonsProps = {
-  modification: boolean,
-}
-
-function FilmCardButtons ({modification}: FilmCardButtonsProps): JSX.Element {
+function FilmCardButtons(): JSX.Element {
   return (
     <div className="film-card__buttons">
-      <BtnPlay />
-      <BtnAddList />
-      {modification ? <BtnAddReview /> : ''}
+      <button className="btn btn--play film-card__button" type="button">
+        <svg viewBox="0 0 19 19" width="19" height="19">
+          <use xlinkHref="#play-s"></use>
+        </svg>
+        <span>Play</span>
+      </button>
+      <button className="btn btn--list film-card__button" type="button">
+        <svg viewBox="0 0 19 20" width="19" height="20">
+          <use xlinkHref="#add"/>
+        </svg>
+        <span>My list</span>
+      </button>
+      <a href='add-review.html' className="btn film-card__button">Add review</a>
     </div>
   );
 }

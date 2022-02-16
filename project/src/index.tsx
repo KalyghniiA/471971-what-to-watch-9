@@ -55,8 +55,8 @@ const mockMainCard: MockMainCard = {
 ReactDOM.render(
   <React.StrictMode>
     <App
-      mainCardData = {mockMainCard}
-      cardsData = {mockData}
+      filmPromoData = {mockMainCard}
+      filmsData = {mockData}
     />
   </React.StrictMode>,
   document.getElementById('root'));

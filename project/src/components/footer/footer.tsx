@@ -1,11 +1,12 @@
 import Logo from '../logo/logo';
-import Copyright from '../copyright/copyright';
 
-function Footer ():JSX.Element {
+function Footer(): JSX.Element {
   return (
     <footer className="page-footer">
-      <Logo modification={true}/>
-      <Copyright />
+      <Logo className={'logo__link--light'}/>
+      <div className="copyright">
+        <p>© {new Date().getFullYear()} What to watch Ltd.</p>
+      </div>
     </footer>
   );
 }

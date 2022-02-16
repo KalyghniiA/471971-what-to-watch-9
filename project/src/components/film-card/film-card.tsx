@@ -1,36 +1,30 @@
-import FilmCardBg from '../film-card-bg/film-card-bg';
-import Header from '../header/header';
-import FilmCardWrap from '../film-card-wrap/film-card-wrap';
-
-type MainCardProps = {
-  image: string,
-  bgImage: string,
+type DataProps = {
+  id: number,
   name: string,
-  genre: string,
-  data: number,
-}
+  image: string,
+  description: string,
+};
 
 type FilmCardProps = {
-  mainCardData: MainCardProps
+  filmData: DataProps
 }
 
-function FilmCard ({mainCardData}:FilmCardProps):JSX.Element {
-  const {
-    bgImage,
-    ...endData
-  } = mainCardData;
+function FilmCard({filmData}: FilmCardProps): JSX.Element {
+  const  {
+    name,
+    image,
+  } = filmData;
 
   return (
-    <section className="film-card">
-      <FilmCardBg
-        bgImage = {bgImage}
-      />
-      <h1 className="visually-hidden">WTW</h1>
-      <Header />
-      <FilmCardWrap
-        mainCardData = {endData}
-      />
-    </section>
+    <article className="small-film-card catalog__films-card">
+      <div className="small-film-card__image">
+        <img src={`img/${image}`} alt={name} width="280" height="175"/>
+      </div>
+      <h3 className="small-film-card__title">
+        <a className="small-film-card__link" href="film-page.html">{name}</a>
+      </h3>
+    </article>
   );
 }
+
 export default FilmCard;

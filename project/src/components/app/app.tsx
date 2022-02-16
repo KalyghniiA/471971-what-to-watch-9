@@ -1,34 +1,21 @@
-import FilmCard from '../film-card/film-card';
 import PageContent from '../page-content/page-content';
+import {Film, FilmPromo} from '../../types/film';
+import FilmPromoCard from '../film-promo-card/film-promo-card';
 
-type MainCardProps = {
-  image: string,
-  bgImage: string,
-  name: string,
-  genre: string,
-  data: number,
-}
-
-type DataProps = {
-  id: number,
-  name: string,
-  image: string,
-  description: string,
-};
 
 type AppScreenProps = {
-  mainCardData: MainCardProps,
-  cardsData: DataProps[]
+  filmPromoData: FilmPromo,
+  filmsData: Film[]
 }
 
-function App({mainCardData, cardsData}: AppScreenProps): JSX.Element {
+function App({filmPromoData, filmsData}: AppScreenProps): JSX.Element {
   return (
     <>
-      <FilmCard
-        mainCardData = {mainCardData}
+      <FilmPromoCard
+        filmPromoData={filmPromoData}
       />
       <PageContent
-        cardsData = {cardsData}
+        filmsData={filmsData}
       />
     </>
   );

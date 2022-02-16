@@ -1,21 +1,16 @@
-import SmallFilmCard from '../small-film-card/small-film-card';
+import FilmCard from '../film-card/film-card';
+import {Film} from '../../types/film';
 
-type DataProps = {
-  id: number,
-  name: string,
-  image: string,
-  description: string,
-};
 
 type CatalogFilmsListProps = {
-  cardsData: DataProps[]
+  filmCardsData: Film[]
 }
 
 
-function CatalogFilmsList ({cardsData}: CatalogFilmsListProps):JSX.Element {
+function CatalogFilmsList({filmCardsData}: CatalogFilmsListProps): JSX.Element {
   return (
     <div className="catalog__films-list">
-      {cardsData.map((film) => <SmallFilmCard data = {film} key = {film.id}/>)}
+      {filmCardsData.map((filmData) => <FilmCard filmData={filmData} key={filmData.id} />)}
     </div>
   );
 }

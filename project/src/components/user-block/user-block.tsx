@@ -1,4 +1,4 @@
-function UserBlock ():JSX.Element {
+function UserBlock(): JSX.Element {
   return (
     <ul className="user-block">
       <li className="user-block__item">
