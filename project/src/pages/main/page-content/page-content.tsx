@@ -1,6 +1,6 @@
 import Catalog from '../catalog/catalog';
-import Footer from '../footer/footer';
-import {Film} from '../../types/film';
+import Footer from '../../../components/footer/footer';
+import {Film} from '../../../types/film';
 
 type PageContentProps = {
   filmsData: Film[]

@@ -1,7 +1,7 @@
-import GenresList from '../genres-list/genres-list';
+import GenresList from '../../../components/genres-list/genres-list';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
-import {Film} from '../../types/film';
-import BtnShowMore from '../btn-show-more/btn-show-more';
+import {Film} from '../../../types/film';
+import BtnShowMore from '../../../components/btn-show-more/btn-show-more';
 
 
 type CatalogProps = {

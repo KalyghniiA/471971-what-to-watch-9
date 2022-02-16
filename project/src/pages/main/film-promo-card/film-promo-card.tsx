@@ -1,5 +1,5 @@
-import Header from '../header/header';
-import {FilmPromo} from '../../types/film';
+import Header from '../../../components/header/header';
+import {FilmPromo} from '../../../types/film';
 import FilmPromoInfo from '../film-promo-info/film-promo-info';
 
 type FilmPromoDataProps = {

@@ -1,5 +1,5 @@
-import {FilmPromo} from '../../types/film';
-import FilmCardButtons from '../film-card-buttons/film-card-buttons';
+import {FilmPromo} from '../../../types/film';
+import FilmCardButtons from '../../../components/film-card-buttons/film-card-buttons';
 
 type FilmPromoInfoProps = {
   filmPromoData: FilmPromo,
