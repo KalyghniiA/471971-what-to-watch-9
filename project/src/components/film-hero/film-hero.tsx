@@ -1,7 +1,7 @@
-import Header from '../../../components/header/header';
-import FilmCardButtons from '../../../components/film-card-buttons/film-card-buttons';
+import Header from '../header/header';
+import FilmCardButtons from '../film-card-buttons/film-card-buttons';
 
-function FilmCardHero(): JSX.Element {
+function FilmHero(): JSX.Element {
   return (
     <div className="film-card__hero">
       <div className="film-card__bg">
@@ -25,4 +25,4 @@ function FilmCardHero(): JSX.Element {
     </div>);
 }
 
-export default FilmCardHero;
+export default FilmHero;

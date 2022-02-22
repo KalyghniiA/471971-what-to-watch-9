@@ -1,61 +1,98 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
+import {FilmType} from './types/film';
 
-type MockData = {
-  id: number,
-  name: string,
-  image: string,
-  description: string,
-};
-
-type MockMainCard = {
-  image: string,
-  bgImage: string,
-  name: string,
-  genre: string,
-  data: number,
-}
-
-const mockData: MockData[] = [
+const mockData: FilmType[] = [
   {
-    id: 1,
-    name: 'bohemian-rhapsody',
-    image: 'bohemian-rhapsody.jpg',
-    description: 'bjdslfkhjalkusehbfklhjbklvajbsxlkvjbadslkjbvalsdkjbv',
+    'id': 1,
+    'name': 'The Grand Budapest Hotel',
+    'posterImage': 'the-grand-budapest-hotel-poster.jpg',
+    'previewImage': 'the-grand-budapest-hotel-poster.jpg',
+    'backgroundImage': 'bg-the-grand-budapest-hotel.jpg',
+    'backgroundColor': '#ffffff',
+    'videoLink': 'https://some-link',
+    'previewVideoLink': 'https://some-link',
+    'description': 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave\'s friend and protege.',
+    'rating': 8.9,
+    'scoresCount': 240,
+    'director': 'Wes Anderson',
+    'starring': [
+      'Bill Murray',
+    ],
+    'runTime': 99,
+    'genre': 'Comedy',
+    'released': 2014,
+    'isFavorite': false,
   },
   {
-    id: 2,
-    name: 'dardjeeling-limited',
-    image: 'dardjeeling-limited.jpg',
-    description: 'bjdslfkhjalkusehbfklhjbklvajbsxlkvjbadslkjbvalsdkjbv',
+    'id': 2,
+    'name': 'dardjeeling-limited',
+    'posterImage': 'dardjeeling-limited.jpg',
+    'previewImage': 'dardjeeling-limited.jpg',
+    'backgroundImage': 'img/the-grand-budapest-hotel-bg.jpg',
+    'backgroundColor': '#ffffff',
+    'videoLink': 'https://some-link',
+    'previewVideoLink': 'https://some-link',
+    'description': 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave\'s friend and protege.',
+    'rating': 8.9,
+    'scoresCount': 240,
+    'director': 'Wes Anderson',
+    'starring': [
+      'Bill Murray',
+    ],
+    'runTime': 99,
+    'genre': 'Comedy',
+    'released': 2014,
+    'isFavorite': false,
   },
   {
-    id: 3,
-    name: 'fantastic-beasts-the-crimes-of-grindelwald',
-    image: 'fantastic-beasts-the-crimes-of-grindelwald.jpg',
-    description: 'bjdslfkhjalkusehbfklhjbklvajbsxlkvjbadslkjbvalsdkjbv',
+    'id': 3,
+    'name': 'fantastic-beasts-the-crimes-of-grindelwald',
+    'posterImage': 'fantastic-beasts-the-crimes-of-grindelwald.jpg',
+    'previewImage': 'fantastic-beasts-the-crimes-of-grindelwald.jpg',
+    'backgroundImage': 'img/the-grand-budapest-hotel-bg.jpg',
+    'backgroundColor': '#ffffff',
+    'videoLink': 'https://some-link',
+    'previewVideoLink': 'https://some-link',
+    'description': 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave\'s friend and protege.',
+    'rating': 8.9,
+    'scoresCount': 240,
+    'director': 'Wes Anderson',
+    'starring': [
+      'Bill Murray',
+    ],
+    'runTime': 99,
+    'genre': 'Comedy',
+    'released': 2014,
+    'isFavorite': false,
   },
   {
-    id: 4,
-    name: 'johnny-english',
-    image: 'johnny-english.jpg',
-    description: 'bjdslfkhjalkusehbfklhjbklvajbsxlkvjbadslkjbvalsdkjbv',
+    'id': 4,
+    'name': 'johnny-english',
+    'posterImage': 'johnny-english.jpg',
+    'previewImage': 'johnny-english.jpg',
+    'backgroundImage': 'img/the-grand-budapest-hotel-bg.jpg',
+    'backgroundColor': '#ffffff',
+    'videoLink': 'https://some-link',
+    'previewVideoLink': 'https://some-link',
+    'description': 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave\'s friend and protege.',
+    'rating': 8.9,
+    'scoresCount': 240,
+    'director': 'Wes Anderson',
+    'starring': [
+      'Bill Murray',
+    ],
+    'runTime': 99,
+    'genre': 'Comedy',
+    'released': 2014,
+    'isFavorite': false,
   },
 ];
-
-const mockMainCard: MockMainCard = {
-  image: 'the-grand-budapest-hotel-poster.jpg',
-  bgImage: 'bg-the-grand-budapest-hotel.jpg',
-  name: 'the-grand-budapest-hotel',
-  genre: 'Drama',
-  data: 2014,
-};
 
 ReactDOM.render(
   <React.StrictMode>
     <App
-      filmPromoData = {mockMainCard}
       filmsData = {mockData}
     />
   </React.StrictMode>,

@@ -1,9 +1,9 @@
-import FilmCard from '../../../components/film-card/film-card';
-import {Film} from '../../../types/film';
+import FilmCard from '../film-card/film-card';
+import {FilmType} from '../../types/film';
 
 
 type CatalogFilmsListProps = {
-  filmCardsData: Film[]
+  filmCardsData: FilmType[]
 }
 
 

@@ -1,4 +1,4 @@
-import FilmCardReview from '../film-card-review/film-card-review';
+import FilmCardReview from '../film-review/film-review';
 
 type Review = {
   id: number
@@ -12,7 +12,7 @@ type FilmCardReviewsProps = {
   reviews: Review[],
 }
 
-function FilmCardReviews({reviews}: FilmCardReviewsProps): JSX.Element {
+function FilmReviews({reviews}: FilmCardReviewsProps): JSX.Element {
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
@@ -25,4 +25,4 @@ function FilmCardReviews({reviews}: FilmCardReviewsProps): JSX.Element {
   );
 }
 
-export default FilmCardReviews;
+export default FilmReviews;

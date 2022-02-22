@@ -1,4 +1,4 @@
-function AddReview(): JSX.Element {
+function AddReviewForm(): JSX.Element {
   return (
     <div className="add-review">
       <form action="#" className="add-review__form">
@@ -49,4 +49,4 @@ function AddReview(): JSX.Element {
 }
 
 
-export default AddReview;
+export default AddReviewForm;

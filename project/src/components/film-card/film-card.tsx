@@ -1,27 +1,24 @@
-type DataProps = {
-  id: number,
-  name: string,
-  image: string,
-  description: string,
-};
+import { FilmType } from '../../types/film';
+import { Link } from 'react-router-dom';
 
 type FilmCardProps = {
-  filmData: DataProps
+  filmData: FilmType,
 }
 
 function FilmCard({filmData}: FilmCardProps): JSX.Element {
   const  {
+    id,
     name,
-    image,
+    previewImage,
   } = filmData;
 
   return (
     <article className="small-film-card catalog__films-card">
       <div className="small-film-card__image">
-        <img src={`img/${image}`} alt={name} width="280" height="175"/>
+        <img src={`img/${previewImage}`} alt={name} width="280" height="175"/>
       </div>
       <h3 className="small-film-card__title">
-        <a className="small-film-card__link" href="film-page.html">{name}</a>
+        <Link className="small-film-card__link" to={`films/${id}`}>{name}</Link>
       </h3>
     </article>
   );

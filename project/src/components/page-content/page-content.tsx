@@ -1,15 +1,16 @@
 import Catalog from '../catalog/catalog';
-import Footer from '../../../components/footer/footer';
-import {Film} from '../../../types/film';
+import Footer from '../footer/footer';
+import {FilmType} from '../../types/film';
+import { CatalogType } from '../../const';
 
 type PageContentProps = {
-  filmsData: Film[]
+  filmsData: FilmType[]
 }
 
 function PageContent({filmsData}: PageContentProps): JSX.Element {
   return (
     <div className="page-content">
-      <Catalog filmCardsData={filmsData} />
+      <Catalog filmCardsData={filmsData} type={CatalogType.Main}/>
       <Footer />
     </div>
   );

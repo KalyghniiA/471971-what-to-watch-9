@@ -6,11 +6,11 @@ type Review = {
   rating: number,
 }
 
-type FilmCardReview = {
+type FilmReview = {
   review: Review
 }
 
-function FilmCardReview({review}: FilmCardReview): JSX.Element {
+function FilmCardReview({review}: FilmReview): JSX.Element {
   const {author, text, date, rating} = review;
 
 

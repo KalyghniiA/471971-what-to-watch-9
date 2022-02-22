@@ -10,7 +10,7 @@ type FilmCardDetailsProps = {
   filmData: FilmCardDetailsData
 }
 
-function FilmCardDetails({filmData}: FilmCardDetailsProps): JSX.Element {
+function FilmDetails({filmData}: FilmCardDetailsProps): JSX.Element {
   const {
     director,
     actors,
@@ -52,4 +52,4 @@ function FilmCardDetails({filmData}: FilmCardDetailsProps): JSX.Element {
   );
 }
 
-export default FilmCardDetails;
+export default FilmDetails;
