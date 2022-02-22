@@ -6,6 +6,7 @@ import SignIn from '../../pages/sign-in/sign-in';
 import MyList from '../../pages/my-list/my-list';
 import Player from '../../pages/player/player';
 import { AppRoute } from '../../const';
+import NotFound from '../../pages/not-found/not-found';
 
 type AppScreenProps = {
   filmsData : FilmType[],
@@ -21,6 +22,7 @@ function App({filmsData}: AppScreenProps): JSX.Element {
         <Route path={AppRoute.Login} element={<SignIn />} />
         <Route path={AppRoute.MyList} element={<MyList filmsData={filmsData} />} />
         <Route path={AppRoute.Player} element={<Player />} />
+        <Route path={'*'} element={<NotFound />}/>
       </Routes>
     </BrowserRouter>
   );
