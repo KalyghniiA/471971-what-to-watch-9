@@ -17,3 +17,11 @@ export type FilmType = {
   released: number
   isFavorite: boolean
 }
+
+export type Review = {
+  id: number,
+  author: string,
+  text: string,
+  date: Date,
+  rating: number,
+}

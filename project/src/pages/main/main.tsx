@@ -1,6 +1,8 @@
 import {FilmType} from '../../types/film';
 import FilmPromoCard from '../../components/film-promo-card/film-promo-card';
-import PageContent from '../../components/page-content/page-content';
+import Catalog from '../../components/catalog/catalog';
+import { CatalogTitle, CatalogTitleClassName } from '../../const';
+import Footer from '../../components/footer/footer';
 
 type MainProps = {
   filmPromoData: FilmType,
@@ -10,12 +12,16 @@ type MainProps = {
 function Main({filmPromoData, filmsData}: MainProps) {
   return (
     <>
-      <FilmPromoCard
-        filmPromoData={filmPromoData}
-      />
-      <PageContent
-        filmsData={filmsData}
-      />
+      <FilmPromoCard filmPromoData={filmPromoData} />
+      <div className="page-content">
+        <Catalog
+          filmCardsData={filmsData}
+          title={CatalogTitle.Main}
+          titleClass={CatalogTitleClassName.Main}
+          isMainView
+        />
+        <Footer />
+      </div>
     </>
   );
 }

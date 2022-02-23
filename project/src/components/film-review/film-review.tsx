@@ -1,10 +1,4 @@
-type Review = {
-  id: number,
-  author: string,
-  text: string,
-  date: Date,
-  rating: number,
-}
+import { Review } from '../../types/film';
 
 type FilmReview = {
   review: Review
