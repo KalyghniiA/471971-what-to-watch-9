@@ -1,14 +1,27 @@
-export type Film = {
-  id: number,
-  name: string,
-  image: string,
-  description: string,
+export type FilmType = {
+  id: number
+  name: string
+  posterImage: string
+  previewImage: string
+  backgroundImage: string
+  backgroundColor: string
+  videoLink: string
+  previewVideoLink: string
+  description: string
+  rating: number
+  scoresCount: number
+  director: string
+  starring: [string]
+  runTime: number
+  genre: string
+  released: number
+  isFavorite: boolean
 }
 
-export type FilmPromo = {
-  image?: string,
-  bgImage?: string,
-  name: string,
-  genre: string,
-  data: number,
+export type Review = {
+  id: number,
+  author: string,
+  text: string,
+  date: Date,
+  rating: number,
 }
