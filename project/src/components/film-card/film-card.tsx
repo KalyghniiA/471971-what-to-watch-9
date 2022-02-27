@@ -4,16 +4,14 @@ import { AppRoute } from '../../const';
 
 type FilmCardProps = {
   filmData: FilmType;
-  onActive: (value: number)=> void;
+  onActive: (value: number) => void;
 };
 
-function FilmCard({ filmData, onActive}: FilmCardProps): JSX.Element {
+function FilmCard({ filmData, onActive }: FilmCardProps): JSX.Element {
   const { id, name, previewImage } = filmData;
 
-
-
   return (
-    <article className="small-film-card catalog__films-card" onMouseEnter={()=> onActive(id)}>
+    <article className="small-film-card catalog__films-card" onMouseEnter={() => onActive(id)}>
       <Link to={`${AppRoute.Film}/${id}`} className="small-film-card__link">
         <div className="small-film-card__image">
           <img src={`img/${previewImage}`} alt={name} width="280" height="175" style={{ display: 'block' }} />

@@ -1,11 +1,11 @@
 import { FilmType } from '../../types/film';
 
 type FilmOverviewProps = {
-  filmData: FilmType
-}
+  filmData: FilmType;
+};
 
-function FilmOverview( {filmData}: FilmOverviewProps ): JSX.Element {
-  const {rating, scoresCount, description, director, starring} = filmData
+function FilmOverview({ filmData }: FilmOverviewProps): JSX.Element {
+  const { rating, scoresCount, description, director, starring } = filmData;
 
   return (
     <>

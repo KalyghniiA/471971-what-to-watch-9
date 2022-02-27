@@ -10,22 +10,19 @@ type FilmProps = {
   filmsData: FilmType[];
 };
 
-
-
 function Film({ filmsData }: FilmProps): JSX.Element {
+  const { id } = useParams<{ id: string }>();
 
-  const { id } = useParams<{id: string}>()
-
-  const film = filmsData.find((film) => id && film.id === +id);
+  const film = filmsData.find((filmCard) => id && filmCard.id === +id);
   if (!film) {
-    return <Navigate to={AppRoute.Root} />
+    return <Navigate to={AppRoute.Root} />;
   }
 
   return (
     <>
       <section className="film-card film-card--full">
-        <FilmHero filmCardData={film}/>
-        <FilmInfo filmCardData={film}/>
+        <FilmHero filmCardData={film} />
+        <FilmInfo filmCardData={film} />
       </section>
       <div className="page-content">
         <Catalog filmCardsData={filmsData} title={CatalogTitle.Card} className={CatalogClassName.Card} />

@@ -4,6 +4,7 @@ export enum AppRoute {
   Login = '/login',
   MyList = '/mylist',
   Player = '/player',
+  AddReview = '/add-review',
 }
 
 export enum CatalogTitle {

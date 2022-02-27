@@ -3,16 +3,16 @@ import FilmCardButtons from '../film-card-buttons/film-card-buttons';
 import { FilmType } from '../../types/film';
 
 type FilmHeroProps = {
-  filmCardData: FilmType,
-}
+  filmCardData: FilmType;
+};
 
-function FilmHero({filmCardData}: FilmHeroProps): JSX.Element {
-  const {name, backgroundImage, genre, released} = filmCardData;
+function FilmHero({ filmCardData }: FilmHeroProps): JSX.Element {
+  const { id, name, backgroundImage, genre, released } = filmCardData;
 
   return (
     <div className="film-card__hero">
       <div className="film-card__bg">
-        <img src={`img/${backgroundImage}`} alt={name}/>
+        <img src={`img/${backgroundImage}`} alt={name} />
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -26,7 +26,7 @@ function FilmHero({filmCardData}: FilmHeroProps): JSX.Element {
             <span className="film-card__year">{released}</span>
           </p>
 
-          <FilmCardButtons />
+          <FilmCardButtons id={id} />
         </div>
       </div>
     </div>

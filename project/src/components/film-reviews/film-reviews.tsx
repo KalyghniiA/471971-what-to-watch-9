@@ -6,7 +6,6 @@ type FilmCardReviewsProps = {
 };
 
 function FilmReviews({ reviews }: FilmCardReviewsProps): JSX.Element {
-
   const middleIndex = Math.floor(reviews.length / 2);
 
   return (

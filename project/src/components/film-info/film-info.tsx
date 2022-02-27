@@ -1,21 +1,11 @@
 import FilmOverview from '../film-overview/film-overview';
 import { FilmType } from '../../types/film';
-import { useState, MouseEvent} from 'react';
 
 type FilmInfoProps = {
-  filmCardData: FilmType,
-}
+  filmCardData: FilmType;
+};
 
-function FilmInfo({filmCardData}: FilmInfoProps): JSX.Element {
-
-  const [navigationState, setNavigationState] = useState('Overview');
-
-  const clickNavigation = (evt: MouseEvent<HTMLAnchorElement>) => {
-    evt.preventDefault();
-    console.dir(evt)
-    //setNavigationState(evt)
-  }
-
+function FilmInfo({ filmCardData }: FilmInfoProps): JSX.Element {
   return (
     <div className="film-card__wrap film-card__translate-top">
       <div className="film-card__info">
@@ -31,24 +21,24 @@ function FilmInfo({filmCardData}: FilmInfoProps): JSX.Element {
           <nav className="film-nav film-card__nav">
             <ul className="film-nav__list">
               <li className="film-nav__item film-nav__item--active">
-                <a href="#" className="film-nav__link" data-value="Overview" onClick={clickNavigation}>
+                <a href="#" className="film-nav__link" data-value="Overview" >
                   Overview
                 </a>
               </li>
               <li className="film-nav__item">
-                <a href="#" className="film-nav__link" onClick={clickNavigation}>
+                <a href="#" className="film-nav__link" >
                   Details
                 </a>
               </li>
               <li className="film-nav__item">
-                <a href="#" className="film-nav__link" onClick={clickNavigation}>
+                <a href="#" className="film-nav__link" >
                   Reviews
                 </a>
               </li>
             </ul>
           </nav>
 
-          <FilmOverview filmData={filmCardData}/>
+          <FilmOverview filmData={filmCardData} />
         </div>
       </div>
     </div>
