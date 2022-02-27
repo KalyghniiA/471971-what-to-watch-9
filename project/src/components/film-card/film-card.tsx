@@ -3,26 +3,23 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
 type FilmCardProps = {
-  filmData: FilmType,
-}
+  filmData: FilmType;
+  onActive: (value: number)=> void;
+};
 
-function FilmCard({filmData}: FilmCardProps): JSX.Element {
-  const  {
-    id,
-    name,
-    previewImage,
-  } = filmData;
+function FilmCard({ filmData, onActive}: FilmCardProps): JSX.Element {
+  const { id, name, previewImage } = filmData;
+
+
 
   return (
-    <article className="small-film-card catalog__films-card">
-      <div className="small-film-card__image">
-        <Link to={`${AppRoute.Film}/${id}`} style={{display: 'block'}}>
-          <img src={`img/${previewImage}`} alt={name} width="280" height="175" style={{display: 'block'}}/>
-        </Link>
-      </div>
-      <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={`${AppRoute.Film}/${id}`}>{name}</Link>
-      </h3>
+    <article className="small-film-card catalog__films-card" onMouseEnter={()=> onActive(id)}>
+      <Link to={`${AppRoute.Film}/${id}`} className="small-film-card__link">
+        <div className="small-film-card__image">
+          <img src={`img/${previewImage}`} alt={name} width="280" height="175" style={{ display: 'block' }} />
+        </div>
+        <h3 className="small-film-card__title">{name}</h3>
+      </Link>
     </article>
   );
 }

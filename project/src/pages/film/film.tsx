@@ -3,25 +3,32 @@ import FilmInfo from '../../components/film-info/film-info';
 import { FilmType } from '../../types/film';
 import Catalog from '../../components/catalog/catalog';
 import Footer from '../../components/footer/footer';
-import { CatalogClassName, CatalogTitle } from '../../const';
+import { AppRoute, CatalogClassName, CatalogTitle } from '../../const';
+import { Navigate, useParams } from 'react-router-dom';
 
 type FilmProps = {
-  filmsData: FilmType[]
-}
+  filmsData: FilmType[];
+};
 
-function Film({filmsData}: FilmProps): JSX.Element {
+
+
+function Film({ filmsData }: FilmProps): JSX.Element {
+
+  const { id } = useParams<{id: string}>()
+
+  const film = filmsData.find((film) => id && film.id === +id);
+  if (!film) {
+    return <Navigate to={AppRoute.Root} />
+  }
+
   return (
     <>
       <section className="film-card film-card--full">
-        <FilmHero />
-        <FilmInfo />
+        <FilmHero filmCardData={film}/>
+        <FilmInfo filmCardData={film}/>
       </section>
       <div className="page-content">
-        <Catalog
-          filmCardsData={filmsData}
-          title={CatalogTitle.Card}
-          className={CatalogClassName.Card}
-        />
+        <Catalog filmCardsData={filmsData} title={CatalogTitle.Card} className={CatalogClassName.Card} />
         <Footer />
       </div>
     </>

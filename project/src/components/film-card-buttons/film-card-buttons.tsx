@@ -1,4 +1,3 @@
-
 function FilmCardButtons(): JSX.Element {
   return (
     <div className="film-card__buttons">
@@ -10,11 +9,13 @@ function FilmCardButtons(): JSX.Element {
       </button>
       <button className="btn btn--list film-card__button" type="button">
         <svg viewBox="0 0 19 20" width="19" height="20">
-          <use xlinkHref="#add"/>
+          <use xlinkHref="#add" />
         </svg>
         <span>My list</span>
       </button>
-      <a href='add-review.html' className="btn film-card__button">Add review</a>
+      <a href="add-review.html" className="btn film-card__button">
+        Add review
+      </a>
     </div>
   );
 }

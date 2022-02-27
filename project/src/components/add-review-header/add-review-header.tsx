@@ -12,7 +12,12 @@ function AddReviewHeader(): JSX.Element {
       <Header />
 
       <div className="film-card__poster film-card__poster--small">
-        <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+        <img
+          src="img/the-grand-budapest-hotel-poster.jpg"
+          alt="The Grand Budapest Hotel poster"
+          width="218"
+          height="327"
+        />
       </div>
     </div>
   );

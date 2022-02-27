@@ -1,17 +1,54 @@
-import FilmNavigation from '../film-navigation/film-navigation';
 import FilmOverview from '../film-overview/film-overview';
+import { FilmType } from '../../types/film';
+import { useState, MouseEvent} from 'react';
 
-function FilmInfo (): JSX.Element {
+type FilmInfoProps = {
+  filmCardData: FilmType,
+}
+
+function FilmInfo({filmCardData}: FilmInfoProps): JSX.Element {
+
+  const [navigationState, setNavigationState] = useState('Overview');
+
+  const clickNavigation = (evt: MouseEvent<HTMLAnchorElement>) => {
+    evt.preventDefault();
+    console.dir(evt)
+    //setNavigationState(evt)
+  }
+
   return (
     <div className="film-card__wrap film-card__translate-top">
       <div className="film-card__info">
         <div className="film-card__poster film-card__poster--big">
-          <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+          <img
+            src="img/the-grand-budapest-hotel-poster.jpg"
+            alt="The Grand Budapest Hotel poster"
+            width="218"
+            height="327"
+          />
         </div>
         <div className="film-card__desc">
-          <FilmNavigation />
+          <nav className="film-nav film-card__nav">
+            <ul className="film-nav__list">
+              <li className="film-nav__item film-nav__item--active">
+                <a href="#" className="film-nav__link" data-value="Overview" onClick={clickNavigation}>
+                  Overview
+                </a>
+              </li>
+              <li className="film-nav__item">
+                <a href="#" className="film-nav__link" onClick={clickNavigation}>
+                  Details
+                </a>
+              </li>
+              <li className="film-nav__item">
+                <a href="#" className="film-nav__link" onClick={clickNavigation}>
+                  Reviews
+                </a>
+              </li>
+            </ul>
+          </nav>
 
-          <FilmOverview />
+          <FilmOverview filmData={filmCardData}/>
         </div>
       </div>
     </div>

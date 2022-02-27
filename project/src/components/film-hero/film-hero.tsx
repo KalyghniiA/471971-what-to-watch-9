@@ -1,11 +1,18 @@
 import Header from '../header/header';
 import FilmCardButtons from '../film-card-buttons/film-card-buttons';
+import { FilmType } from '../../types/film';
 
-function FilmHero(): JSX.Element {
+type FilmHeroProps = {
+  filmCardData: FilmType,
+}
+
+function FilmHero({filmCardData}: FilmHeroProps): JSX.Element {
+  const {name, backgroundImage, genre, released} = filmCardData;
+
   return (
     <div className="film-card__hero">
       <div className="film-card__bg">
-        <img src={''} alt="The Grand Budapest Hotel"/>
+        <img src={`img/${backgroundImage}`} alt={name}/>
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -13,16 +20,17 @@ function FilmHero(): JSX.Element {
 
       <div className="film-card__wrap">
         <div className="film-card__desc">
-          <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+          <h2 className="film-card__title">{name}</h2>
           <p className="film-card__meta">
-            <span className="film-card__genre">Drama</span>
-            <span className="film-card__year">2014</span>
+            <span className="film-card__genre">{genre}</span>
+            <span className="film-card__year">{released}</span>
           </p>
 
           <FilmCardButtons />
         </div>
       </div>
-    </div>);
+    </div>
+  );
 }
 
 export default FilmHero;
