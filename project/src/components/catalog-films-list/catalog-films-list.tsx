@@ -9,14 +9,14 @@ type CatalogFilmsListProps = {
 function CatalogFilmsList({ filmCardsData }: CatalogFilmsListProps): JSX.Element {
   const [activeCard, setActiveCard] = useState(0);
 
-  const updateActiveCard = (value: number): void => {
+  const handleHover = (value: number): void => {
     setActiveCard(value);
   };
 
   return (
     <div className="catalog__films-list">
       {filmCardsData.map((filmData) => (
-        <FilmCard filmData={filmData} key={filmData.id} onActive={updateActiveCard} />
+        <FilmCard filmData={filmData} key={filmData.id} onActive={handleHover} />
       ))}
     </div>
   );

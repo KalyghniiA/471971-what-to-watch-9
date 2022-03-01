@@ -20,7 +20,7 @@ function FilmCardButtons({ id }: FilmCardButtons): JSX.Element {
         </svg>
         <span>My list</span>
       </Link>
-      <Link to={`${AppRoute.Film}/${id}${AppRoute.AddReview}`} className="btn film-card__button">
+      <Link to={`${AppRoute.Film}/${id}/${AppRoute.AddReview}`} className="btn film-card__button">
         Add review
       </Link>
     </div>

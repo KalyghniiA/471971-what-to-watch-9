@@ -14,7 +14,7 @@ function FilmCard({ filmData, onActive }: FilmCardProps): JSX.Element {
     <article className="small-film-card catalog__films-card" onMouseEnter={() => onActive(id)}>
       <Link to={`${AppRoute.Film}/${id}`} className="small-film-card__link">
         <div className="small-film-card__image">
-          <img src={`img/${previewImage}`} alt={name} width="280" height="175" style={{ display: 'block' }} />
+          <img src={`img/${previewImage}`} alt={name} width="280" height="175" />
         </div>
         <h3 className="small-film-card__title">{name}</h3>
       </Link>
