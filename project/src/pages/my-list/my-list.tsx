@@ -5,18 +5,14 @@ import Footer from '../../components/footer/footer';
 import { CatalogTitle, CatalogTitleClassName } from '../../const';
 
 type MyListProps = {
-  filmsData: FilmType[],
-}
+  filmsData: FilmType[];
+};
 
-function MyList ({filmsData}: MyListProps): JSX.Element {
+function MyList({ filmsData }: MyListProps): JSX.Element {
   return (
     <div className="user-page">
       <Header />
-      <Catalog
-        filmCardsData={filmsData}
-        title={CatalogTitle.MyList}
-        titleClass={CatalogTitleClassName.MyList}
-      />
+      <Catalog filmCardsData={filmsData} title={CatalogTitle.MyList} titleClass={CatalogTitleClassName.MyList} />
       <Footer />
     </div>
   );

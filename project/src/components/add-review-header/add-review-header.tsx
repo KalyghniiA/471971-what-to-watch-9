@@ -1,10 +1,17 @@
 import Header from '../header/header';
+import { FilmType } from '../../types/film';
 
-function AddReviewHeader(): JSX.Element {
+type AddReviewHeaderProps = {
+  filmData: FilmType;
+};
+
+function AddReviewHeader({ filmData }: AddReviewHeaderProps): JSX.Element {
+  const { backgroundImage, name, posterImage } = filmData;
+
   return (
     <div className="film-card__header">
       <div className="film-card__bg">
-        <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+        <img src={`img/${backgroundImage}`} alt={name} />
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -12,7 +19,7 @@ function AddReviewHeader(): JSX.Element {
       <Header />
 
       <div className="film-card__poster film-card__poster--small">
-        <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+        <img src={`img/${posterImage}`} alt={name} width="218" height="327" />
       </div>
     </div>
   );

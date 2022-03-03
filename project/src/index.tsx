@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import { mockData } from './mocks/mocks';
+import { mockFilms } from './mocks/films';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App
-      filmsData = {mockData}
-    />
+    <App filmsData={mockFilms} />
   </React.StrictMode>,
-  document.getElementById('root'));
+  document.getElementById('root'),
+);

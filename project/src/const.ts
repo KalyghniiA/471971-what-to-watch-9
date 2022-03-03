@@ -4,17 +4,18 @@ export enum AppRoute {
   Login = '/login',
   MyList = '/mylist',
   Player = '/player',
+  AddReview = 'add-review',
 }
 
 export enum CatalogTitle {
   Main = 'Catalog',
   Card = 'More like this',
-  MyList = 'Catalog'
+  MyList = 'Catalog',
 }
 
 export enum CatalogTitleClassName {
   Main = 'visually-hidden',
-  MyList = 'visually-hidden'
+  MyList = 'visually-hidden',
 }
 
 export enum CatalogClassName {
