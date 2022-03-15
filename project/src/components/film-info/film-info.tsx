@@ -1,11 +1,23 @@
 import FilmOverview from '../film-overview/film-overview';
 import { FilmType } from '../../types/film';
+import FilmCardTabs from '../film-card-tabs/film-card-tabs';
+import { useState } from 'react';
+import { FilmCardTabsValue } from '../../const';
+import FilmDetails from '../film-details/film-details';
+import FilmReviews from '../film-reviews/film-reviews';
+import { mockReviews } from '../../mocks/reviews';
 
 type FilmInfoProps = {
   filmCardData: FilmType;
 };
 
 function FilmInfo({ filmCardData }: FilmInfoProps): JSX.Element {
+  const [activeValue, setActiveValue] = useState<string>(FilmCardTabsValue.Overview);
+
+  const handleActiveValue = (value: string): void => {
+    setActiveValue(value);
+  };
+
   return (
     <div className="film-card__wrap film-card__translate-top">
       <div className="film-card__info">
@@ -18,27 +30,11 @@ function FilmInfo({ filmCardData }: FilmInfoProps): JSX.Element {
           />
         </div>
         <div className="film-card__desc">
-          <nav className="film-nav film-card__nav">
-            <ul className="film-nav__list">
-              <li className="film-nav__item film-nav__item--active">
-                <a href="#" className="film-nav__link" data-value="Overview">
-                  Overview
-                </a>
-              </li>
-              <li className="film-nav__item">
-                <a href="#" className="film-nav__link">
-                  Details
-                </a>
-              </li>
-              <li className="film-nav__item">
-                <a href="#" className="film-nav__link">
-                  Reviews
-                </a>
-              </li>
-            </ul>
-          </nav>
+          <FilmCardTabs activeValue={activeValue} onActiveValue={handleActiveValue} />
 
-          <FilmOverview filmData={filmCardData} />
+          {activeValue === FilmCardTabsValue.Overview && <FilmOverview filmData={filmCardData} />}
+          {activeValue === FilmCardTabsValue.Details && <FilmDetails filmData={filmCardData} />}
+          {activeValue === FilmCardTabsValue.Reviews && <FilmReviews reviews={mockReviews} />}
         </div>
       </div>
     </div>
