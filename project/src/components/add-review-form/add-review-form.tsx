@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CommentLength } from '../../const';
 
 type RatingInputProps = {
   name: string;
@@ -8,8 +9,6 @@ type RatingInputProps = {
 };
 
 function RatingInput({ name, index, value, onRatingChange }: RatingInputProps): JSX.Element {
-  console.log(typeof value);
-
   return (
     <>
       <input
@@ -34,9 +33,7 @@ function AddReviewForm(): JSX.Element {
 
   const handleRatingChange = (id: number): void => {
     setRating(id);
-  console.log(id)
   };
-
 
   return (
     <div className="add-review">
@@ -44,13 +41,20 @@ function AddReviewForm(): JSX.Element {
         <div className="rating">
           -
           <div className="rating__stars">
-            {Array.from({ length: 10 }, (_, i) => <RatingInput name="Rating" index={i + 1} key={i + 1} value={rating} onRatingChange={handleRatingChange} />).reverse()}
+            {Array.from({ length: 10 }, (_, i) => (
+              <RatingInput name="Rating" index={i + 1} key={i + 1} value={rating} onRatingChange={handleRatingChange} />
+            )).reverse()}
           </div>
         </div>
         <div className="add-review__text">
-          <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" value={reviewText} onChange={(evt) => setReviewText(evt.target.value)}></textarea>
+          <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" value={reviewText} onChange={(evt) => setReviewText(evt.target.value)}>
+          </textarea>
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit" disabled={rating === 0 || reviewText.length < 50 || reviewText.length > 300}>
+            <button
+              className="add-review__btn"
+              type="submit"
+              disabled={rating === 0 || reviewText.length < CommentLength.Min || reviewText.length > CommentLength.Max}
+            >
               Post
             </button>
           </div>

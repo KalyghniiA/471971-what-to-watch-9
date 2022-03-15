@@ -27,3 +27,18 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export enum FilmCardTabsValue {
+  Overview = 'Overview',
+  Details = 'Details',
+  Reviews = 'Reviews',
+}
+
+export enum FilmCardTabActiveClassName {
+  Active = 'film-nav__item--active',
+}
+
+export enum CommentLength {
+  Min = 50,
+  Max = 300,
+}
