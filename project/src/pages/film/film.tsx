@@ -25,7 +25,7 @@ function Film({ filmsData }: FilmProps): JSX.Element {
         <FilmInfo filmCardData={film} />
       </section>
       <div className="page-content">
-        <Catalog filmCardsData={filmsData} title={CatalogTitle.Card} className={CatalogClassName.Card} />
+        <Catalog title={CatalogTitle.Card} className={CatalogClassName.Card} />
         <Footer />
       </div>
     </>

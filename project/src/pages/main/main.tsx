@@ -14,12 +14,7 @@ function Main({ filmPromoData, filmsData }: MainProps) {
     <>
       <FilmPromoCard filmPromoData={filmPromoData} />
       <div className="page-content">
-        <Catalog
-          filmCardsData={filmsData}
-          title={CatalogTitle.Main}
-          titleClass={CatalogTitleClassName.Main}
-          isMainView
-        />
+        <Catalog title={CatalogTitle.Main} titleClass={CatalogTitleClassName.Main} isMainView />
         <Footer />
       </div>
     </>
