@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, ViewLink } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { resetShownCard, selectionViewLink } from '../../store/action';
+import { selectViewLink } from '../../store/action';
 
 type LogoProps = {
   className?: string;
@@ -16,8 +16,7 @@ function Logo({ className = '' }: LogoProps): JSX.Element {
         className={`logo__link ${className}`}
         to={AppRoute.Root}
         onClick={() => {
-          dispatch(selectionViewLink(ViewLink.Main));
-          dispatch(resetShownCard());
+          dispatch(selectViewLink(ViewLink.Main));
         }}
       >
         <span className="logo__letter logo__letter--1">W</span>

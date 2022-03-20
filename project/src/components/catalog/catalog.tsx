@@ -1,7 +1,7 @@
 import GenresList from '../genres-list/genres-list';
 import CatalogFilmsList from '../catalog-films-list/catalog-films-list';
 import BtnShowMore from '../btn-show-more/btn-show-more';
-import { filteringFilms } from '../../utils';
+import { filterFilm } from '../../utils';
 import { useAppSelector } from '../../hooks';
 import { QuantityCards, ViewLink } from '../../const';
 
@@ -14,7 +14,7 @@ type CatalogProps = {
 
 function Catalog({ title, className = '', titleClass = '', isMainView = false }: CatalogProps): JSX.Element {
   const { films, activeGenre, activeLink, quantityShownCards } = useAppSelector((state) => state);
-  const filmsData = isMainView ? filteringFilms(films, activeGenre) : films;
+  const filmsData = isMainView ? filterFilm(films, activeGenre) : films;
 
   const getActiveCatalogList = () => {
     switch (activeLink) {
@@ -27,12 +27,14 @@ function Catalog({ title, className = '', titleClass = '', isMainView = false }:
     }
   };
 
+  const isShowMoreVisible = () => filmsData.length > quantityShownCards;
+
   return (
     <section className={`catalog ${className}`}>
       <h2 className={`catalog__title ${titleClass}`}>{title}</h2>
       {isMainView && <GenresList />}
       {getActiveCatalogList()}
-      {isMainView && filmsData.length > quantityShownCards && <BtnShowMore />}
+      {isMainView && isShowMoreVisible() && <BtnShowMore />}
     </section>
   );
 }

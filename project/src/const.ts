@@ -36,10 +36,6 @@ export enum FilmCardTabsValue {
   Reviews = 'Reviews',
 }
 
-export enum FilmCardTabActiveClassName {
-  Active = 'film-nav__item--active',
-}
-
 export enum CommentLength {
   Min = 50,
   Max = 300,
@@ -69,4 +65,4 @@ export enum QuantityCards {
   Card = 4,
 }
 
-export const StepShowCard = 4;
+export const STEP_SHOW_CARD = 4;

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, ViewLink } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { resetShownCard, selectionViewLink } from '../../store/action';
+import { selectViewLink } from '../../store/action';
 
 function UserBlock(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -13,8 +13,7 @@ function UserBlock(): JSX.Element {
           <Link
             to={AppRoute.MyList}
             onClick={() => {
-              dispatch(selectionViewLink(ViewLink.List));
-              dispatch(resetShownCard());
+              dispatch(selectViewLink(ViewLink.List));
             }}
           >
             <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />

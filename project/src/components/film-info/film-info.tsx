@@ -14,9 +14,7 @@ type FilmInfoProps = {
 function FilmInfo({ filmCardData }: FilmInfoProps): JSX.Element {
   const [activeTab, setActiveTab] = useState<FilmCardTabsValue>(FilmCardTabsValue.Overview);
 
-  const handleActiveValue = (value: FilmCardTabsValue): void => {
-    setActiveTab(value);
-  };
+  const handleActiveValue = (value: FilmCardTabsValue): void => setActiveTab(value);
 
   const getActiveTabContent = () => {
     switch (activeTab) {

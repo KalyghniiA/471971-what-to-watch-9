@@ -3,13 +3,21 @@ import FilmPromoCard from '../../components/film-promo-card/film-promo-card';
 import Catalog from '../../components/catalog/catalog';
 import { CatalogTitle, CatalogTitleClassName } from '../../const';
 import Footer from '../../components/footer/footer';
+import { useEffect } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { resetShownCards } from '../../store/action';
 
 type MainProps = {
   filmPromoData: FilmType;
-  filmsData: FilmType[];
 };
 
-function Main({ filmPromoData, filmsData }: MainProps) {
+function Main({ filmPromoData }: MainProps) {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(resetShownCards());
+  }, []);
+
   return (
     <>
       <FilmPromoCard filmPromoData={filmPromoData} />

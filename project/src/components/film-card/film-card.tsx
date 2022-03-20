@@ -4,7 +4,7 @@ import { AppRoute, ViewLink } from '../../const';
 import { useEffect, useRef, useState } from 'react';
 import FilmCardPlayer from '../film-card-player/film-card-player';
 import { useAppDispatch } from '../../hooks';
-import { selectionViewLink } from '../../store/action';
+import { selectViewLink } from '../../store/action';
 
 type FilmCardProps = {
   filmData: FilmType;
@@ -47,7 +47,7 @@ function FilmCard({ filmData }: FilmCardProps): JSX.Element {
       <Link
         to={`${AppRoute.Film}/${id}`}
         className="small-film-card__link"
-        onClick={() => dispatch(selectionViewLink(ViewLink.Card))}
+        onClick={() => dispatch(selectViewLink(ViewLink.Card))}
       >
         <div className="small-film-card__image">
           {active ? (
