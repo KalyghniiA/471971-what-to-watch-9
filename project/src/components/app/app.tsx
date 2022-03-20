@@ -1,4 +1,3 @@
-import { FilmType } from '../../types/film';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Main from '../../pages/main/main';
 import Film from '../../pages/film/film';
@@ -9,24 +8,23 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import NotFound from '../../pages/not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import AddReview from '../../pages/add-review/add-review';
+import { useAppSelector } from '../../hooks';
 
-type AppScreenProps = {
-  filmsData: FilmType[];
-};
+function App(): JSX.Element {
+  const { films } = useAppSelector((state) => state);
 
-function App({ filmsData }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Root} element={<Main filmPromoData={filmsData[0]} filmsData={filmsData} />} />
-        <Route path={`${AppRoute.Film}/:id`} element={<Film filmsData={filmsData} />} />
-        <Route path={`${AppRoute.Film}/:id/${AppRoute.AddReview}`} element={<AddReview filmsData={filmsData} />} />
+        <Route path={AppRoute.Root} element={<Main filmPromoData={films[0]} />} />
+        <Route path={`${AppRoute.Film}/:id`} element={<Film filmsData={films} />} />
+        <Route path={`${AppRoute.Film}/:id/${AppRoute.AddReview}`} element={<AddReview filmsData={films} />} />
         <Route path={AppRoute.Login} element={<SignIn />} />
         <Route
           path={AppRoute.MyList}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <MyList filmsData={filmsData} />
+              <MyList filmsData={films} />
             </PrivateRoute>
           }
         />

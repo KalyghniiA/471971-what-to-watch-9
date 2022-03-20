@@ -1,22 +1,32 @@
-import { FilmCardTabActiveClassName } from '../../const';
+import { FilmCardTabsValue } from '../../const';
+import classNames from 'classnames';
 
 type FilmCardTabsProps = {
   activeValue: string;
-  onActiveValue: (value: string) => void;
+  onActiveValue: (value: FilmCardTabsValue) => void;
 };
 
 type FilmCardTabProps = FilmCardTabsProps & {
-  value: string;
+  value: FilmCardTabsValue;
 };
 
-const tabValues = ['Overview', 'Details', 'Reviews'];
+const tabValues = [FilmCardTabsValue.Overview, FilmCardTabsValue.Details, FilmCardTabsValue.Reviews];
 
 function FilmCardTab({ activeValue, onActiveValue, value }: FilmCardTabProps): JSX.Element {
-  const activeClass = activeValue === value ? FilmCardTabActiveClassName.Active : '';
-
   return (
-    <li className={`film-nav__item ${activeClass}`}>
-      <a href="#" className="film-nav__link" data-value={value} onClick={() => onActiveValue(value)}>
+    <li
+      className={classNames('film-nav__item', {
+        'film-nav__item--active': activeValue === value,
+      })}
+    >
+      <a
+        href="#"
+        className="film-nav__link"
+        onClick={(evt) => {
+          evt.preventDefault();
+          onActiveValue(value);
+        }}
+      >
         {value}
       </a>
     </li>

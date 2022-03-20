@@ -1,56 +1,44 @@
+import { genres } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { selectGenre, resetShownCards } from '../../store/action';
+import classNames from 'classnames';
+
+type GenreTabProps = {
+  text: string;
+  value: string;
+};
+
+function GenreTab({ text, value }: GenreTabProps): JSX.Element {
+  const { activeGenre } = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
+
+  return (
+    <li
+      className={classNames('catalog__genres-item', {
+        'catalog__genres-item--active': value === activeGenre,
+      })}
+    >
+      <a
+        href="#"
+        className="catalog__genres-link"
+        onClick={(evt) => {
+          evt.preventDefault();
+          dispatch(selectGenre(value));
+          dispatch(resetShownCards());
+        }}
+      >
+        {text}
+      </a>
+    </li>
+  );
+}
+
 function GenresList(): JSX.Element {
   return (
     <ul className="catalog__genres-list">
-      <li className="catalog__genres-item catalog__genres-item--active">
-        <a href="#" className="catalog__genres-link">
-          All genres
-        </a>
-      </li>
-      <li className="catalog__genres-item">
-        <a href="#" className="catalog__genres-link">
-          Comedies
-        </a>
-      </li>
-      <li className="catalog__genres-item">
-        <a href="#" className="catalog__genres-link">
-          Crime
-        </a>
-      </li>
-      <li className="catalog__genres-item">
-        <a href="#" className="catalog__genres-link">
-          Documentary
-        </a>
-      </li>
-      <li className="catalog__genres-item">
-        <a href="#" className="catalog__genres-link">
-          Dramas
-        </a>
-      </li>
-      <li className="catalog__genres-item">
-        <a href="#" className="catalog__genres-link">
-          Horror
-        </a>
-      </li>
-      <li className="catalog__genres-item">
-        <a href="#" className="catalog__genres-link">
-          Kids & Family
-        </a>
-      </li>
-      <li className="catalog__genres-item">
-        <a href="#" className="catalog__genres-link">
-          Romance
-        </a>
-      </li>
-      <li className="catalog__genres-item">
-        <a href="#" className="catalog__genres-link">
-          Sci-Fi
-        </a>
-      </li>
-      <li className="catalog__genres-item">
-        <a href="#" className="catalog__genres-link">
-          Thrillers
-        </a>
-      </li>
+      {Object.keys(genres).map((tab) => (
+        <GenreTab text={genres[tab]} value={tab} key={tab} />
+      ))}
     </ul>
   );
 }

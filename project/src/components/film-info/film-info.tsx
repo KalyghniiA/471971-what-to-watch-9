@@ -12,10 +12,21 @@ type FilmInfoProps = {
 };
 
 function FilmInfo({ filmCardData }: FilmInfoProps): JSX.Element {
-  const [activeValue, setActiveValue] = useState<string>(FilmCardTabsValue.Overview);
+  const [activeTab, setActiveTab] = useState<FilmCardTabsValue>(FilmCardTabsValue.Overview);
 
-  const handleActiveValue = (value: string): void => {
-    setActiveValue(value);
+  const handleActiveValue = (value: FilmCardTabsValue): void => setActiveTab(value);
+
+  const getActiveTabContent = () => {
+    switch (activeTab) {
+      case FilmCardTabsValue.Overview:
+        return <FilmOverview filmData={filmCardData} />;
+      case FilmCardTabsValue.Details:
+        return <FilmDetails filmData={filmCardData} />;
+      case FilmCardTabsValue.Reviews:
+        return <FilmReviews reviews={mockReviews} />;
+      default:
+        throw new Error(`Unknown tab value: ${activeTab}`);
+    }
   };
 
   return (
@@ -30,11 +41,8 @@ function FilmInfo({ filmCardData }: FilmInfoProps): JSX.Element {
           />
         </div>
         <div className="film-card__desc">
-          <FilmCardTabs activeValue={activeValue} onActiveValue={handleActiveValue} />
-
-          {activeValue === FilmCardTabsValue.Overview && <FilmOverview filmData={filmCardData} />}
-          {activeValue === FilmCardTabsValue.Details && <FilmDetails filmData={filmCardData} />}
-          {activeValue === FilmCardTabsValue.Reviews && <FilmReviews reviews={mockReviews} />}
+          <FilmCardTabs activeValue={activeTab} onActiveValue={handleActiveValue} />
+          {getActiveTabContent()}
         </div>
       </div>
     </div>

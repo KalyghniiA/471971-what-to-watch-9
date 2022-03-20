@@ -12,7 +12,7 @@ function MyList({ filmsData }: MyListProps): JSX.Element {
   return (
     <div className="user-page">
       <Header />
-      <Catalog filmCardsData={filmsData} title={CatalogTitle.MyList} titleClass={CatalogTitleClassName.MyList} />
+      <Catalog title={CatalogTitle.MyList} titleClass={CatalogTitleClassName.MyList} />
       <Footer />
     </div>
   );

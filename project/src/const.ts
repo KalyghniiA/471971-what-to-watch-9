@@ -1,3 +1,5 @@
+import { DictionaryGenre } from './types/dictionary';
+
 export enum AppRoute {
   Root = '/',
   Film = '/films',
@@ -34,11 +36,33 @@ export enum FilmCardTabsValue {
   Reviews = 'Reviews',
 }
 
-export enum FilmCardTabActiveClassName {
-  Active = 'film-nav__item--active',
-}
-
 export enum CommentLength {
   Min = 50,
   Max = 300,
 }
+
+export const genres: DictionaryGenre = {
+  'All Genres': 'All Genres',
+  Comedy: 'Comedies',
+  Crime: 'Crime',
+  Documentary: 'Documentary',
+  Drama: 'Dramas',
+  Horror: 'Horror',
+  Family: 'Kids & Family',
+  Romance: 'Romance',
+  'Sci-Fi': 'Sci-Fi',
+  Thriller: 'Thrillers',
+};
+
+export enum ViewLink {
+  Main = 'Main',
+  Card = 'Card',
+  List = 'List',
+}
+
+export enum QuantityCards {
+  Main = 8,
+  Card = 4,
+}
+
+export const STEP_SHOW_CARD = 4;
