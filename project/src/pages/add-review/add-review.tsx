@@ -2,7 +2,7 @@ import AddReviewHeader from '../../components/add-review-header/add-review-heade
 import AddReviewForm from '../../components/add-review-form/add-review-form';
 import { Navigate, useParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { FilmType } from '../../types/film';
+import { Film as FilmType } from '../../types/film';
 
 type AddReviewProps = {
   filmsData: FilmType[];

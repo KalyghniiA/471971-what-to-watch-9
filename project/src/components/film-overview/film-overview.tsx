@@ -1,4 +1,4 @@
-import { FilmType } from '../../types/film';
+import { Film as FilmType } from '../../types/film';
 
 type FilmOverviewProps = {
   filmData: FilmType;

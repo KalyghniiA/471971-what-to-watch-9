@@ -1,11 +1,11 @@
 import FilmOverview from '../film-overview/film-overview';
-import { FilmType } from '../../types/film';
+import { Film as FilmType } from '../../types/film';
 import FilmCardTabs from '../film-card-tabs/film-card-tabs';
 import { useState } from 'react';
 import { FilmCardTabsValue } from '../../const';
 import FilmDetails from '../film-details/film-details';
 import FilmReviews from '../film-reviews/film-reviews';
-import { mockReviews } from '../../mocks/reviews';
+import { useAppSelector } from '../../hooks';
 
 type FilmInfoProps = {
   filmCardData: FilmType;
@@ -15,6 +15,8 @@ function FilmInfo({ filmCardData }: FilmInfoProps): JSX.Element {
   const [activeTab, setActiveTab] = useState<FilmCardTabsValue>(FilmCardTabsValue.Overview);
 
   const handleActiveValue = (value: FilmCardTabsValue): void => setActiveTab(value);
+  const { reviews } = useAppSelector((state) => state);
+  const { posterImage, name } = filmCardData;
 
   const getActiveTabContent = () => {
     switch (activeTab) {
@@ -23,7 +25,7 @@ function FilmInfo({ filmCardData }: FilmInfoProps): JSX.Element {
       case FilmCardTabsValue.Details:
         return <FilmDetails filmData={filmCardData} />;
       case FilmCardTabsValue.Reviews:
-        return <FilmReviews reviews={mockReviews} />;
+        return <FilmReviews reviews={reviews} />;
       default:
         throw new Error(`Unknown tab value: ${activeTab}`);
     }
@@ -33,12 +35,7 @@ function FilmInfo({ filmCardData }: FilmInfoProps): JSX.Element {
     <div className="film-card__wrap film-card__translate-top">
       <div className="film-card__info">
         <div className="film-card__poster film-card__poster--big">
-          <img
-            src="img/the-grand-budapest-hotel-poster.jpg"
-            alt="The Grand Budapest Hotel poster"
-            width="218"
-            height="327"
-          />
+          <img src={posterImage} alt={name} width="218" height="327" />
         </div>
         <div className="film-card__desc">
           <FilmCardTabs activeValue={activeTab} onActiveValue={handleActiveValue} />

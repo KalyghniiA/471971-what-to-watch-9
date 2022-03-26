@@ -1,6 +1,6 @@
 import Header from '../header/header';
 import FilmCardButtons from '../film-card-buttons/film-card-buttons';
-import { FilmType } from '../../types/film';
+import { Film as FilmType } from '../../types/film';
 
 type FilmHeroProps = {
   filmCardData: FilmType;
@@ -12,7 +12,7 @@ function FilmHero({ filmCardData }: FilmHeroProps): JSX.Element {
   return (
     <div className="film-card__hero">
       <div className="film-card__bg">
-        <img src={`img/${backgroundImage}`} alt={name} />
+        <img src={backgroundImage} alt={name} />
       </div>
 
       <h1 className="visually-hidden">WTW</h1>

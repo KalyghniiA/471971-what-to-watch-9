@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
 type FilmCardButtons = {
-  id?: number;
+  id: number;
 };
 
 function FilmCardButtons({ id }: FilmCardButtons): JSX.Element {

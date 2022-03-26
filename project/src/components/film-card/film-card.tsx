@@ -1,10 +1,11 @@
-import { FilmType } from '../../types/film';
+import { Film as FilmType } from '../../types/film';
 import { Link } from 'react-router-dom';
 import { AppRoute, ViewLink } from '../../const';
 import { useEffect, useRef, useState } from 'react';
 import FilmCardPlayer from '../film-card-player/film-card-player';
 import { useAppDispatch } from '../../hooks';
 import { selectViewLink } from '../../store/action';
+import { fetchFilmAction, fetchSimilarFilmsAction } from '../../store/api-actions';
 
 type FilmCardProps = {
   filmData: FilmType;
@@ -47,13 +48,17 @@ function FilmCard({ filmData }: FilmCardProps): JSX.Element {
       <Link
         to={`${AppRoute.Film}/${id}`}
         className="small-film-card__link"
-        onClick={() => dispatch(selectViewLink(ViewLink.Card))}
+        onClick={() => {
+          dispatch(selectViewLink(ViewLink.Card));
+          dispatch(fetchFilmAction(id));
+          dispatch(fetchSimilarFilmsAction(id));
+        }}
       >
         <div className="small-film-card__image">
           {active ? (
             <FilmCardPlayer previewVideoLink={previewVideoLink} previewImage={previewImage} />
           ) : (
-            <img src={`img/${previewImage}`} alt={name} width="280" height="175" />
+            <img src={previewImage} alt={name} width="280" height="175" />
           )}
         </div>
         {!active && <h3 className="small-film-card__title">{name}</h3>}

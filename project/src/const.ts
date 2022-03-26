@@ -66,3 +66,29 @@ export enum QuantityCards {
 }
 
 export const STEP_SHOW_CARD = 4;
+
+export const APIRoute = {
+  films: () => '/films',
+  film: (id: number) => `/films/${id}`,
+  similarFilms: (id: number) => `/films/${id}/similar`,
+  promo: () => '/promo',
+  favorite: () => '/favorite',
+  changeStatusFilm: (id: number, status: boolean) => `/favorite/${id}/${status}`,
+  comments: (id: number) => `/comments/${id}`,
+  login: () => '/login',
+  logout: () => '/logout',
+};
+
+export enum HTTP_CODE {
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  NOT_FOUND = 404,
+}
+
+export enum LOADING_STATUS {
+  //'idle' | 'loading' | 'succeeded' | 'failed'
+  IDLE = 'IDLE',
+  LOADING = 'LOADING',
+  SUCCEEDED = 'SUCCEEDED',
+  FAILED = 'FAILED',
+}

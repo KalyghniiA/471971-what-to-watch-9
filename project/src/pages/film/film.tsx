@@ -1,21 +1,20 @@
 import FilmHero from '../../components/film-hero/film-hero';
 import FilmInfo from '../../components/film-info/film-info';
-import { FilmType } from '../../types/film';
 import Catalog from '../../components/catalog/catalog';
 import Footer from '../../components/footer/footer';
-import { AppRoute, CatalogClassName, CatalogTitle } from '../../const';
-import { Navigate, useParams } from 'react-router-dom';
+import { CatalogClassName, CatalogTitle } from '../../const';
+import { useAppSelector } from '../../hooks';
+import Preloader from '../../components/preloader/preloader';
 
-type FilmProps = {
-  filmsData: FilmType[];
-};
+function Film(): JSX.Element {
+  const { film, isFilmDataLoaded, isSimilarFilmsDataLoaded } = useAppSelector((state) => state);
 
-function Film({ filmsData }: FilmProps): JSX.Element {
-  const { id } = useParams<{ id: string }>();
+  if (!isFilmDataLoaded && !isSimilarFilmsDataLoaded) {
+    return <Preloader />;
+  }
 
-  const film = filmsData.find((filmCard) => id && filmCard.id === +id);
   if (!film) {
-    return <Navigate to={AppRoute.Root} />;
+    return <Preloader />;
   }
 
   return (
