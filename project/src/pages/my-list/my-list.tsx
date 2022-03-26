@@ -1,4 +1,4 @@
-import { FilmType } from '../../types/film';
+import { Film as FilmType } from '../../types/film';
 import Header from '../../components/header/header';
 import Catalog from '../../components/catalog/catalog';
 import Footer from '../../components/footer/footer';

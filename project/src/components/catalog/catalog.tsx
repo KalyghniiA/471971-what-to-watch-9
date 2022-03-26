@@ -13,7 +13,7 @@ type CatalogProps = {
 };
 
 function Catalog({ title, className = '', titleClass = '', isMainView = false }: CatalogProps): JSX.Element {
-  const { films, activeGenre, activeLink, quantityShownCards } = useAppSelector((state) => state);
+  const { films, activeGenre, activeLink, quantityShownCards, similarFilms } = useAppSelector((state) => state);
   const filmsData = isMainView ? filterFilm(films, activeGenre) : films;
 
   const getActiveCatalogList = () => {
@@ -21,7 +21,7 @@ function Catalog({ title, className = '', titleClass = '', isMainView = false }:
       case ViewLink.Main:
         return <CatalogFilmsList filmCardsData={filmsData.slice(0, quantityShownCards)} />;
       case ViewLink.Card:
-        return <CatalogFilmsList filmCardsData={filmsData.slice(0, QuantityCards.Card)} />;
+        return <CatalogFilmsList filmCardsData={similarFilms.slice(0, QuantityCards.Card)} />;
       case ViewLink.List:
         return <CatalogFilmsList filmCardsData={filmsData} />;
     }

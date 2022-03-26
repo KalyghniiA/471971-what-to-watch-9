@@ -1,5 +1,5 @@
 import Header from '../header/header';
-import { FilmType } from '../../types/film';
+import { Film as FilmType } from '../../types/film';
 import FilmPromoInfo from '../film-promo-info/film-promo-info';
 
 type FilmPromoDataProps = {
@@ -7,12 +7,12 @@ type FilmPromoDataProps = {
 };
 
 function FilmPromoCard({ filmPromoData }: FilmPromoDataProps): JSX.Element {
-  const { backgroundImage } = filmPromoData;
+  const { backgroundImage, name } = filmPromoData;
 
   return (
     <section className="film-card">
       <div className="film-card__bg">
-        <img src={`img/${backgroundImage}`} alt="The Grand Budapest Hotel" />
+        <img src={backgroundImage} alt={name} />
       </div>
       <h1 className="visually-hidden">WTW</h1>
       <Header />

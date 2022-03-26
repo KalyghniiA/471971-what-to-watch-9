@@ -1,8 +1,8 @@
 import FilmCardReview from '../film-review/film-review';
-import { Review } from '../../types/review';
+import { Review as ReviewType } from '../../types/review';
 
 type FilmCardReviewsProps = {
-  reviews: Review[];
+  reviews: ReviewType[];
 };
 
 function FilmReviews({ reviews }: FilmCardReviewsProps): JSX.Element {

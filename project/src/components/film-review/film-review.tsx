@@ -1,8 +1,8 @@
-import { Review } from '../../types/review';
+import { Review as ReviewType } from '../../types/review';
 import dayjs from 'dayjs';
 
 type FilmReview = {
-  review: Review;
+  review: ReviewType;
 };
 
 function FilmCardReview({ review }: FilmReview): JSX.Element {

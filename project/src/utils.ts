@@ -1,5 +1,5 @@
 import { genres } from './const';
-import { FilmType } from './types/film';
+import { Film as FilmType } from './types/film';
 
 export const filterFilm = (films: FilmType[], type: string) => {
   if (type === genres['All Genres']) {
