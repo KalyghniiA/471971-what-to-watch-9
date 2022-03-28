@@ -7,9 +7,9 @@ import { useAppSelector } from '../../hooks';
 import Preloader from '../../components/preloader/preloader';
 
 function Film(): JSX.Element {
-  const { film, isFilmDataLoaded, isSimilarFilmsDataLoaded } = useAppSelector((state) => state);
+  const { film, isFilmDataLoaded, isSimilarFilmsDataLoaded, isReviewsDataLoaded } = useAppSelector((state) => state);
 
-  if (!isFilmDataLoaded && !isSimilarFilmsDataLoaded) {
+  if (!isFilmDataLoaded && !isSimilarFilmsDataLoaded && !isReviewsDataLoaded) {
     return <Preloader />;
   }
 

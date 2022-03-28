@@ -1,7 +1,7 @@
 import { store } from '../store';
 import { Film as FilmType } from './film';
 import { Review as ReviewType } from './review';
-import { AuthorizationStatus, QuantityCards, ViewLink } from '../const';
+import { AuthorizationStatus, LoadingStatus, QuantityCards, ViewLink } from '../const';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -11,6 +11,7 @@ export type InitialState = {
   promoFilm: FilmType | null;
   film: FilmType | null;
   similarFilms: FilmType[];
+  favoriteFilms: FilmType[];
   reviews: ReviewType[];
   activeLink: ViewLink;
   quantityShownCards: QuantityCards;
@@ -19,6 +20,9 @@ export type InitialState = {
   isFilmDataLoaded: boolean;
   isSimilarFilmsDataLoaded: boolean;
   isPromoFilmDataLoaded: boolean;
+  isFavoriteFilmsDataLoaded: boolean;
+  isReviewsDataLoaded: boolean;
+  isPostingCommentStatus: LoadingStatus;
 };
 
 export type AppDispatch = typeof store.dispatch;

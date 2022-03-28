@@ -1,21 +1,27 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api, store } from './index';
 import { Film as FilmType } from '../types/film';
-import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
+import { APIRoute, AppRoute, AuthorizationStatus, LoadingStatus } from '../const';
 import {
+  changeCommentButtonStatus,
+  loadFavoriteFilms,
   loadFilm,
   loadFilms,
   loadPromoFilm,
   loadReviews,
   loadSimilarFilms,
   redirectToRoute,
-  requireAuthorization
+  requireAuthorization,
+  updateCommentsData,
+  updateIsFavoriteFilm
 } from './action';
-import { Review as ReviewType } from '../types/review';
+import { Review as ReviewType, ReviewData } from '../types/review';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
 import { errorHandle } from '../services/error-handle';
+import { dropAvatarUrl, saveAvatarUrl } from '../services/avatarUrl';
+import { isFavoriteData } from '../types/is-favorite-data';
 
 export const fetchFilmsAction = createAsyncThunk('data/fetchFilms', async () => {
   try {
@@ -53,6 +59,15 @@ export const fetchSimilarFilmsAction = createAsyncThunk('data/fetchSimilarFilms'
   }
 });
 
+export const fetchFavoriteFilmsAction = createAsyncThunk('data/fetchFavoriteFilms', async () => {
+  try {
+    const { data } = await api.get<FilmType[]>(APIRoute.favorite());
+    store.dispatch(loadFavoriteFilms(data));
+  } catch (err) {
+    errorHandle(err);
+  }
+});
+
 export const fetchCommentsAction = createAsyncThunk('data/fetchComments', async (id: number) => {
   try {
     const { data } = await api.get<ReviewType[]>(APIRoute.comments(id));
@@ -62,12 +77,38 @@ export const fetchCommentsAction = createAsyncThunk('data/fetchComments', async 
   }
 });
 
+export const pushCommentAction = createAsyncThunk('data/pushComment', async ({ comment, rating, id }: ReviewData) => {
+  store.dispatch(changeCommentButtonStatus(LoadingStatus.LOADING));
+  try {
+    const { data } = await api.post(APIRoute.comments(id), { comment, rating });
+    store.dispatch(changeCommentButtonStatus(LoadingStatus.SUCCEEDED));
+    store.dispatch(updateCommentsData(data));
+    store.dispatch(redirectToRoute(AppRoute.AddReview)); // ПОЖАЛУСТА ПОСМОТРИ, СЕЙЧАС НЕ ПРАВИЛЬНО, НЕ ПОНИМАЮ ЧТО ПРИНИМАЕТ МИДЛ
+  } catch (err) {
+    errorHandle(err);
+    store.dispatch(changeCommentButtonStatus(LoadingStatus.FAILED));
+  }
+});
+
+export const updateIsFavoriteFilmAction = createAsyncThunk(
+  'data/updateIsFavoriteFilm',
+  async ({ id, isFavorite }: isFavoriteData) => {
+    try {
+      const { data } = await api.post(APIRoute.changeStatusFilm(id, isFavorite));
+      store.dispatch(updateIsFavoriteFilm(data));
+    } catch (err) {
+      errorHandle(err);
+    }
+  },
+);
+
 export const loginAction = createAsyncThunk('user/login', async ({ login: email, password }: AuthData) => {
   try {
     const {
-      data: { token },
+      data: { token, avatarUrl },
     } = await api.post<UserData>(APIRoute.login(), { email, password });
     saveToken(token);
+    saveAvatarUrl(avatarUrl);
     store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
     store.dispatch(redirectToRoute(AppRoute.Root));
   } catch (err) {
@@ -80,6 +121,7 @@ export const logoutAction = createAsyncThunk('user/logout', async () => {
   try {
     await api.delete(APIRoute.logout());
     dropToken();
+    dropAvatarUrl();
     store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   } catch (err) {
     errorHandle(err);

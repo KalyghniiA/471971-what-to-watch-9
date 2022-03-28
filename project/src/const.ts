@@ -73,19 +73,19 @@ export const APIRoute = {
   similarFilms: (id: number) => `/films/${id}/similar`,
   promo: () => '/promo',
   favorite: () => '/favorite',
-  changeStatusFilm: (id: number, status: boolean) => `/favorite/${id}/${status}`,
+  changeStatusFilm: (id: number, status: number) => `/favorite/${id}/${status}`,
   comments: (id: number) => `/comments/${id}`,
   login: () => '/login',
   logout: () => '/logout',
 };
 
-export enum HTTP_CODE {
+export enum HttpCode {
   BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
   NOT_FOUND = 404,
 }
 
-export enum LOADING_STATUS {
+export enum LoadingStatus {
   //'idle' | 'loading' | 'succeeded' | 'failed'
   IDLE = 'IDLE',
   LOADING = 'LOADING',

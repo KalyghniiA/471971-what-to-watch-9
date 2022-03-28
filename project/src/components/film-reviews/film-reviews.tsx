@@ -6,7 +6,7 @@ type FilmCardReviewsProps = {
 };
 
 function FilmReviews({ reviews }: FilmCardReviewsProps): JSX.Element {
-  const middleIndex = Math.floor(reviews.length / 2);
+  const middleIndex = Math.ceil(reviews.length / 2);
 
   return (
     <div className="film-card__reviews film-card__row">
@@ -16,7 +16,7 @@ function FilmReviews({ reviews }: FilmCardReviewsProps): JSX.Element {
         ))}
       </div>
       <div className="film-card__reviews-col">
-        {reviews.slice(middleIndex + 1).map((review) => (
+        {reviews.slice(middleIndex).map((review) => (
           <FilmCardReview review={review} key={review.id} />
         ))}
       </div>

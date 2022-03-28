@@ -4,8 +4,8 @@ import { AppRoute, ViewLink } from '../../const';
 import { useEffect, useRef, useState } from 'react';
 import FilmCardPlayer from '../film-card-player/film-card-player';
 import { useAppDispatch } from '../../hooks';
-import { selectViewLink } from '../../store/action';
-import { fetchFilmAction, fetchSimilarFilmsAction } from '../../store/api-actions';
+import { resetLoadDataStatus, selectViewLink } from '../../store/action';
+import { fetchCommentsAction, fetchFilmAction, fetchSimilarFilmsAction } from '../../store/api-actions';
 
 type FilmCardProps = {
   filmData: FilmType;
@@ -39,21 +39,21 @@ function FilmCard({ filmData }: FilmCardProps): JSX.Element {
     setActive(false);
   };
 
+  const handleNavigateToFilm = () => {
+    dispatch(selectViewLink(ViewLink.Card));
+    dispatch(fetchFilmAction(id));
+    dispatch(fetchSimilarFilmsAction(id));
+    dispatch(fetchCommentsAction(id));
+    dispatch(resetLoadDataStatus());
+  };
+
   return (
     <article
       className="small-film-card catalog__films-card"
       onMouseEnter={handlerLaunchVideo}
       onMouseLeave={handlerStopVideo}
     >
-      <Link
-        to={`${AppRoute.Film}/${id}`}
-        className="small-film-card__link"
-        onClick={() => {
-          dispatch(selectViewLink(ViewLink.Card));
-          dispatch(fetchFilmAction(id));
-          dispatch(fetchSimilarFilmsAction(id));
-        }}
-      >
+      <Link to={`${AppRoute.Film}/${id}`} className="small-film-card__link" onClick={handleNavigateToFilm}>
         <div className="small-film-card__image">
           {active ? (
             <FilmCardPlayer previewVideoLink={previewVideoLink} previewImage={previewImage} />
