@@ -82,6 +82,9 @@ const reducer = createReducer(initialState, (builder) => {
       state.authorizationStatus = action.payload;
     })
     .addCase(resetLoadDataStatus, (state) => {
+      state.film = null;
+      state.similarFilms = [];
+      state.reviews = [];
       state.isFilmDataLoaded = false;
       state.isSimilarFilmsDataLoaded = false;
       state.isReviewsDataLoaded = false;

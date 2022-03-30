@@ -4,7 +4,7 @@ import { AppRoute, ViewLink } from '../../const';
 import { useEffect, useRef, useState } from 'react';
 import FilmCardPlayer from '../film-card-player/film-card-player';
 import { useAppDispatch } from '../../hooks';
-import { resetLoadDataStatus, selectViewLink } from '../../store/action';
+import { selectViewLink } from '../../store/action';
 
 type FilmCardProps = {
   filmData: FilmType;
@@ -40,7 +40,6 @@ function FilmCard({ filmData }: FilmCardProps): JSX.Element {
 
   const handleNavigateToFilm = () => {
     dispatch(selectViewLink(ViewLink.Card));
-    dispatch(resetLoadDataStatus());
   };
 
   return (
