@@ -6,7 +6,7 @@ type FilmPromoInfoProps = {
 };
 
 function FilmPromoInfo({ filmPromoData }: FilmPromoInfoProps): JSX.Element {
-  const { posterImage, name, genre, released, id } = filmPromoData;
+  const { posterImage, name, genre, released, id, isFavorite } = filmPromoData;
 
   return (
     <div className="film-card__info">
@@ -20,7 +20,7 @@ function FilmPromoInfo({ filmPromoData }: FilmPromoInfoProps): JSX.Element {
           <span className="film-card__year">{released}</span>
         </p>
 
-        <FilmCardButtons id={id} />
+        <FilmCardButtons id={id} isFavorite={isFavorite} />
       </div>
     </div>
   );

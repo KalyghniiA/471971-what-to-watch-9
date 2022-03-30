@@ -13,7 +13,9 @@ type CatalogProps = {
 };
 
 function Catalog({ title, className = '', titleClass = '', isMainView = false }: CatalogProps): JSX.Element {
-  const { films, activeGenre, activeLink, quantityShownCards, similarFilms } = useAppSelector((state) => state);
+  const { films, activeGenre, activeLink, quantityShownCards, similarFilms, favoriteFilms } = useAppSelector(
+    (state) => state,
+  );
   const filmsData = isMainView ? filterFilm(films, activeGenre) : films;
 
   const getActiveCatalogList = () => {
@@ -23,7 +25,7 @@ function Catalog({ title, className = '', titleClass = '', isMainView = false }:
       case ViewLink.Card:
         return <CatalogFilmsList filmCardsData={similarFilms.slice(0, QuantityCards.Card)} />;
       case ViewLink.List:
-        return <CatalogFilmsList filmCardsData={filmsData} />;
+        return <CatalogFilmsList filmCardsData={favoriteFilms} />;
     }
   };
 

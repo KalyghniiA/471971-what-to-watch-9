@@ -3,13 +3,29 @@ import FilmInfo from '../../components/film-info/film-info';
 import Catalog from '../../components/catalog/catalog';
 import Footer from '../../components/footer/footer';
 import { CatalogClassName, CatalogTitle } from '../../const';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import Preloader from '../../components/preloader/preloader';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { fetchCommentsAction, fetchFilmAction, fetchSimilarFilmsAction } from '../../store/api-actions';
+import { resetLoadDataStatus } from '../../store/action';
 
 function Film(): JSX.Element {
-  const { film, isFilmDataLoaded, isSimilarFilmsDataLoaded } = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
 
-  if (!isFilmDataLoaded && !isSimilarFilmsDataLoaded) {
+  useEffect(() => {
+    dispatch(fetchFilmAction(Number(id)));
+    dispatch(fetchSimilarFilmsAction(Number(id)));
+    dispatch(fetchCommentsAction(Number(id)));
+    return () => {
+      dispatch(resetLoadDataStatus());
+    };
+  },[id]);
+
+  const { film, isFilmDataLoaded, isSimilarFilmsDataLoaded, isReviewsDataLoaded } = useAppSelector((state) => state);
+
+  if (!isFilmDataLoaded && !isSimilarFilmsDataLoaded && !isReviewsDataLoaded) {
     return <Preloader />;
   }
 

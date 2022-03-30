@@ -17,3 +17,8 @@ export type Film = {
   released: number;
   isFavorite: boolean;
 };
+
+export type FilmCardButtons = {
+  id: number;
+  isFavorite: boolean;
+};

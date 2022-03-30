@@ -2,10 +2,12 @@ import { Link } from 'react-router-dom';
 import { AppRoute, ViewLink } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { selectViewLink } from '../../store/action';
-import { logoutAction } from '../../store/api-actions';
+import { fetchFavoriteFilmsAction, logoutAction } from '../../store/api-actions';
+import { getAvatarUrl } from '../../services/avatarUrl';
 
 function UserBlock(): JSX.Element {
   const dispatch = useAppDispatch();
+  const avatarUrl = getAvatarUrl();
 
   return (
     <ul className="user-block">
@@ -15,9 +17,10 @@ function UserBlock(): JSX.Element {
             to={AppRoute.MyList}
             onClick={() => {
               dispatch(selectViewLink(ViewLink.List));
+              dispatch(fetchFavoriteFilmsAction());
             }}
           >
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+            <img src={avatarUrl} alt="User avatar" width="63" height="63" />
           </Link>
         </div>
       </li>
