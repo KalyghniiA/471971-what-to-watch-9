@@ -15,7 +15,8 @@ import {
   selectGenre,
   selectViewLink,
   updateCommentsData,
-  updateIsFavoriteFilm
+  updateIsFavoriteFilm,
+  updateIsFavoritePromoFilm
 } from './action';
 import { InitialState as InitialStateType } from '../types/state';
 
@@ -95,6 +96,11 @@ const reducer = createReducer(initialState, (builder) => {
       const index = state.films.findIndex((film) => film.id === action.payload.id);
       if (index !== -1) {
         state.films[index].isFavorite = action.payload.isFavorite;
+      }
+    })
+    .addCase(updateIsFavoritePromoFilm, (state, action) => {
+      if (state.promoFilm !== null) {
+        state.promoFilm.isFavorite = action.payload.isFavorite;
       }
     });
 });

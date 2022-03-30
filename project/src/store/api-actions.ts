@@ -22,6 +22,7 @@ import { dropToken, saveToken } from '../services/token';
 import { errorHandle } from '../services/error-handle';
 import { dropAvatarUrl, saveAvatarUrl } from '../services/avatarUrl';
 import { isFavoriteData } from '../types/is-favorite-data';
+import { useAppSelector } from '../hooks';
 
 export const fetchFilmsAction = createAsyncThunk('data/fetchFilms', async () => {
   try {
@@ -46,6 +47,7 @@ export const fetchFilmAction = createAsyncThunk('data/fetchFilm', async (id: num
     const { data } = await api.get<FilmType>(APIRoute.film(id));
     store.dispatch(loadFilm(data));
   } catch (err) {
+    store.dispatch(redirectToRoute('/404'));
     errorHandle(err);
   }
 });
@@ -83,7 +85,7 @@ export const pushCommentAction = createAsyncThunk('data/pushComment', async ({ c
     const { data } = await api.post(APIRoute.comments(id), { comment, rating });
     store.dispatch(changeCommentButtonStatus(LoadingStatus.SUCCEEDED));
     store.dispatch(updateCommentsData(data));
-    store.dispatch(redirectToRoute(AppRoute.AddReview)); // ПОЖАЛУСТА ПОСМОТРИ, СЕЙЧАС НЕ ПРАВИЛЬНО, НЕ ПОНИМАЮ ЧТО ПРИНИМАЕТ МИДЛ
+    store.dispatch(redirectToRoute(`${AppRoute.Film}/${id}`));
   } catch (err) {
     errorHandle(err);
     store.dispatch(changeCommentButtonStatus(LoadingStatus.FAILED));
@@ -93,9 +95,19 @@ export const pushCommentAction = createAsyncThunk('data/pushComment', async ({ c
 export const updateIsFavoriteFilmAction = createAsyncThunk(
   'data/updateIsFavoriteFilm',
   async ({ id, isFavorite }: isFavoriteData) => {
+    const { /*promoFilm,*/ authorizationStatus } = useAppSelector((state) => state);
+
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      return errorHandle('No Login');
+    }
+
     try {
       const { data } = await api.post(APIRoute.changeStatusFilm(id, isFavorite));
+
       store.dispatch(updateIsFavoriteFilm(data));
+      /*if ( promoFilm !== null && promoFilm.id === data.id) {
+
+      }*/
     } catch (err) {
       errorHandle(err);
     }
@@ -124,6 +136,20 @@ export const logoutAction = createAsyncThunk('user/logout', async () => {
     dropAvatarUrl();
     store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   } catch (err) {
+    errorHandle(err);
+  }
+});
+
+export const checkAuthorization = createAsyncThunk('user/CheckAuthorization', async () => {
+  try {
+    const {
+      data: { token, avatarUrl },
+    } = await api.get(APIRoute.login());
+    saveToken(token);
+    saveAvatarUrl(avatarUrl);
+    store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+  } catch (err) {
+    store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     errorHandle(err);
   }
 });

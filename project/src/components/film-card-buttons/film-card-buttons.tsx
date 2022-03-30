@@ -3,11 +3,9 @@ import { AppRoute, AuthorizationStatus, ViewLink } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { FilmCardButtons as FilmCardButtonsTypes } from '../../types/film';
 import { updateIsFavoriteFilmAction } from '../../store/api-actions';
-import { useState } from 'react';
 
 function FilmCardButtons({ id, isFavorite }: FilmCardButtonsTypes): JSX.Element {
   const { activeLink, authorizationStatus } = useAppSelector((state) => state);
-  const [favorite, setFavorite] = useState(isFavorite);
 
   const dispatch = useAppDispatch();
 
@@ -15,7 +13,7 @@ function FilmCardButtons({ id, isFavorite }: FilmCardButtonsTypes): JSX.Element 
     dispatch(
       updateIsFavoriteFilmAction({
         id: id,
-        isFavorite: Number(favorite),
+        isFavorite: Number(!isFavorite),
       }),
     );
   };
@@ -34,11 +32,10 @@ function FilmCardButtons({ id, isFavorite }: FilmCardButtonsTypes): JSX.Element 
         type="button"
         onClick={(evt) => {
           evt.preventDefault();
-          setFavorite(!favorite);
           onClickMyList();
         }}
       >
-        {favorite ? (
+        {!isFavorite ? (
           <svg viewBox="0 0 19 20" width="19" height="20">
             <use xlinkHref="#add" />
           </svg>

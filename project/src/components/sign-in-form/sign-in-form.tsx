@@ -64,7 +64,9 @@ function SignInForm(): JSX.Element {
     <div className="sign-in user-page__content">
       <form action="#" className="sign-in__form" onSubmit={handleChangeForm}>
         <div className="sign-in__message">
-          {Object.entries(formFields).map(([key, value]) => inputState[key].error && <FormError text={value} key={key} />)}
+          {Object.entries(formFields).map(
+            ([key, value]) => inputState[key].error && <FormError text={value} key={key} />,
+          )}
         </div>
         <div className="sign-in__fields">
           {Object.entries(formFields).map(([key, value]) => {

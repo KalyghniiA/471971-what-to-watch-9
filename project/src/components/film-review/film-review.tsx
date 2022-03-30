@@ -16,7 +16,7 @@ function FilmCardReview({ review }: FilmReview): JSX.Element {
         <footer className="review__details">
           <cite className="review__author">{user.name}</cite>
           <time className="review__date" dateTime={dayjs(date).format('YYYY-MM-DD')}>
-            {date}
+            {dayjs(date).format('YYYY-MM-DD')}
           </time>
         </footer>
       </blockquote>
