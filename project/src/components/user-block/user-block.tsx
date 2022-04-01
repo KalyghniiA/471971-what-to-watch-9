@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, ViewLink } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { selectViewLink } from '../../store/action';
 import { fetchFavoriteFilmsAction, logoutAction } from '../../store/api-actions';
 import { getAvatarUrl } from '../../services/avatarUrl';
+import { selectViewLink } from '../../store/app-process/app-process';
 
 function UserBlock(): JSX.Element {
   const dispatch = useAppDispatch();

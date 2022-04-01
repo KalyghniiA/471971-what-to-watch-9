@@ -16,7 +16,8 @@ function UserBlockNoAuth(): JSX.Element {
 }
 
 function Header(): JSX.Element {
-  const { authorizationStatus, activeLink } = useAppSelector((state) => state);
+  const { activeLink } = useAppSelector(({ APP }) => APP);
+  const { authorizationStatus } = useAppSelector(({ LOGIN }) => LOGIN);
 
   const headerClassName = classNames('page-header', {
     'film-card__head': activeLink !== ViewLink.List,

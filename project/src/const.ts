@@ -92,3 +92,9 @@ export enum LoadingStatus {
   SUCCEEDED = 'SUCCEEDED',
   FAILED = 'FAILED',
 }
+
+export enum NameSpase {
+  login = 'LOGIN',
+  data = 'DATA',
+  app = 'APP',
+}

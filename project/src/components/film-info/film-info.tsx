@@ -15,7 +15,7 @@ function FilmInfo({ filmCardData }: FilmInfoProps): JSX.Element {
   const [activeTab, setActiveTab] = useState<FilmCardTabsValue>(FilmCardTabsValue.Overview);
 
   const handleActiveValue = (value: FilmCardTabsValue): void => setActiveTab(value);
-  const { reviews } = useAppSelector((state) => state);
+  const { reviews } = useAppSelector(({ DATA }) => DATA);
   const { posterImage, name } = filmCardData;
 
   const getActiveTabContent = () => {

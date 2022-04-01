@@ -2,13 +2,13 @@ import FilmHero from '../../components/film-hero/film-hero';
 import FilmInfo from '../../components/film-info/film-info';
 import Catalog from '../../components/catalog/catalog';
 import Footer from '../../components/footer/footer';
-import { CatalogClassName, CatalogTitle } from '../../const';
+import { CatalogClassName, CatalogTitle, LoadingStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Preloader from '../../components/preloader/preloader';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchCommentsAction, fetchFilmAction, fetchSimilarFilmsAction } from '../../store/api-actions';
-import { resetLoadDataStatus } from '../../store/action';
+import { resetLoadDataStatus } from '../../store/film-data-process/film-data-process';
 
 function Film(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -21,11 +21,23 @@ function Film(): JSX.Element {
     return () => {
       dispatch(resetLoadDataStatus());
     };
-  },[id]);
+  }, [id]);
 
-  const { film, isFilmDataLoaded, isSimilarFilmsDataLoaded, isReviewsDataLoaded } = useAppSelector((state) => state);
+  const { film, isFilmStatus, isSimilarFilmsStatus, isReviewsStatus } = useAppSelector(({ DATA }) => DATA);
 
-  if (!isFilmDataLoaded && !isSimilarFilmsDataLoaded && !isReviewsDataLoaded) {
+  if (
+    isFilmStatus === LoadingStatus.LOADING ||
+    isSimilarFilmsStatus === LoadingStatus.LOADING ||
+    isReviewsStatus === LoadingStatus.LOADING
+  ) {
+    return <Preloader />;
+  }
+
+  if (
+    isFilmStatus === LoadingStatus.FAILED ||
+    isSimilarFilmsStatus === LoadingStatus.FAILED ||
+    isReviewsStatus === LoadingStatus.FAILED
+  ) {
     return <Preloader />;
   }
 

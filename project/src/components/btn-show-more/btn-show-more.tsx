@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../../hooks';
-import { increaseLimit } from '../../store/action';
+import { increaseLimit } from '../../store/app-process/app-process';
 
 function BtnShowMore(): JSX.Element {
   const dispatch = useAppDispatch();

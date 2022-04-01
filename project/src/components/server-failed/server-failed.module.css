@@ -1,0 +1,22 @@
+.div {
+  background-image: url('hide-the-pain-harold.jpeg');
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh;
+}
+
+.header {
+  display: block;
+  width: 300px;
+  margin: 0 auto;
+  padding-top: 35vh;
+  color: black;
+}
+
+.paragraph {
+  display: block;
+  width: 300px;
+  margin: 0 auto;
+  padding-top: 5vh;
+  color: black;
+}

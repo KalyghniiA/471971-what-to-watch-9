@@ -13,9 +13,9 @@ type CatalogProps = {
 };
 
 function Catalog({ title, className = '', titleClass = '', isMainView = false }: CatalogProps): JSX.Element {
-  const { films, activeGenre, activeLink, quantityShownCards, similarFilms, favoriteFilms } = useAppSelector(
-    (state) => state,
-  );
+  const { activeGenre, activeLink, quantityShownCards } = useAppSelector(({ APP }) => APP);
+  const { films, similarFilms, favoriteFilms } = useAppSelector(({ DATA }) => DATA);
+
   const filmsData = isMainView ? filterFilm(films, activeGenre) : films;
 
   const getActiveCatalogList = () => {
