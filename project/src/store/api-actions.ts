@@ -10,18 +10,15 @@ import { dropToken, saveToken } from '../services/token';
 import { errorHandle } from '../services/error-handle';
 import { dropAvatarUrl, saveAvatarUrl } from '../services/avatarUrl';
 import {
-  errorLoadFavoriteFilms,
   errorLoadFilms,
   errorLoadPromoFilm,
-  errorLoadReviews,
-  errorLoadSimilarFilms,
   loadFavoriteFilms,
   loadFilm,
   loadFilms,
-  loadingFavoriteFilms,
+  loadingFavoriteFilms, loadingFilm,
   loadingFilms,
   loadingPromoFilm,
-  loadingReviews,
+  loadingReviews, loadingSimilarFilms,
   loadPromoFilm,
   loadReviews,
   loadSimilarFilms,
@@ -54,6 +51,7 @@ export const fetchPromoFilmAction = createAsyncThunk('data/fetchPromoFilm', asyn
 });
 
 export const fetchFilmAction = createAsyncThunk('data/fetchFilm', async (id: number) => {
+  store.dispatch(loadingFilm());
   try {
     const { data } = await api.get<FilmType>(APIRoute.film(id));
     store.dispatch(loadFilm(data));
@@ -64,11 +62,11 @@ export const fetchFilmAction = createAsyncThunk('data/fetchFilm', async (id: num
 });
 
 export const fetchSimilarFilmsAction = createAsyncThunk('data/fetchSimilarFilms', async (id: number) => {
+  store.dispatch(loadingSimilarFilms());
   try {
     const { data } = await api.get<FilmType[]>(APIRoute.similarFilms(id));
     store.dispatch(loadSimilarFilms(data));
   } catch (err) {
-    store.dispatch(errorLoadSimilarFilms());
     errorHandle(err);
   }
 });
@@ -79,7 +77,6 @@ export const fetchFavoriteFilmsAction = createAsyncThunk('data/fetchFavoriteFilm
     const { data } = await api.get<FilmType[]>(APIRoute.favorite());
     store.dispatch(loadFavoriteFilms(data));
   } catch (err) {
-    store.dispatch(errorLoadFavoriteFilms());
     errorHandle(err);
   }
 });
@@ -90,7 +87,6 @@ export const fetchCommentsAction = createAsyncThunk('data/fetchComments', async 
     const { data } = await api.get<ReviewType[]>(APIRoute.comments(id));
     store.dispatch(loadReviews(data));
   } catch (err) {
-    store.dispatch(errorLoadReviews());
     errorHandle(err);
   }
 });

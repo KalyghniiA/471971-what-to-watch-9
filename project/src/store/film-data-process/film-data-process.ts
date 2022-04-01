@@ -56,9 +56,6 @@ export const filmDataProcess = createSlice({
       state.similarFilms = action.payload;
       state.isSimilarFilmsStatus = LoadingStatus.SUCCEEDED;
     },
-    errorLoadSimilarFilms: (state) => {
-      state.isSimilarFilmsStatus = LoadingStatus.FAILED;
-    },
     loadingFavoriteFilms: (state) => {
       state.isFavoriteFilmsStatus = LoadingStatus.LOADING;
     },
@@ -66,18 +63,12 @@ export const filmDataProcess = createSlice({
       state.favoriteFilms = action.payload;
       state.isFavoriteFilmsStatus = LoadingStatus.SUCCEEDED;
     },
-    errorLoadFavoriteFilms: (state) => {
-      state.isFavoriteFilmsStatus = LoadingStatus.FAILED;
-    },
     loadingReviews: (state) => {
       state.isReviewsStatus = LoadingStatus.LOADING;
     },
     loadReviews: (state, action) => {
       state.reviews = action.payload;
       state.isReviewsStatus = LoadingStatus.SUCCEEDED;
-    },
-    errorLoadReviews: (state) => {
-      state.isReviewsStatus = LoadingStatus.FAILED;
     },
     resetLoadDataStatus: (state) => {
       state.film = null;
@@ -108,13 +99,10 @@ export const {
   errorLoadPromoFilm,
   loadFavoriteFilms,
   loadingFavoriteFilms,
-  errorLoadFavoriteFilms,
   loadSimilarFilms,
   loadingSimilarFilms,
-  errorLoadSimilarFilms,
   loadReviews,
   loadingReviews,
-  errorLoadReviews,
   postingReview,
   updateReviewsData,
   resetLoadDataStatus,

@@ -33,14 +33,6 @@ function Film(): JSX.Element {
     return <Preloader />;
   }
 
-  if (
-    isFilmStatus === LoadingStatus.FAILED ||
-    isSimilarFilmsStatus === LoadingStatus.FAILED ||
-    isReviewsStatus === LoadingStatus.FAILED
-  ) {
-    return <Preloader />;
-  }
-
   if (!film) {
     return <Preloader />;
   }
