@@ -14,13 +14,19 @@ export type InitialStateFilmDataProcess = {
   promoFilm: FilmType | null;
   film: FilmType | null;
   similarFilms: FilmType[];
-  favoriteFilms: FilmType[];
-  reviews: ReviewType[];
   isFilmsStatus: LoadingStatus;
   isFilmStatus: LoadingStatus;
   isSimilarFilmsStatus: LoadingStatus;
   isPromoFilmStatus: LoadingStatus;
+};
+
+export type InitialStateFavoriteFilmDataProcess = {
+  favoriteFilms: FilmType[];
   isFavoriteFilmsStatus: LoadingStatus;
+};
+
+export type InitialStateReviewDataProcess = {
+  reviews: ReviewType[];
   isReviewsStatus: LoadingStatus;
   isPostingCommentStatus: LoadingStatus;
 };
@@ -30,5 +36,7 @@ export type InitialStateAppProcess = {
   activeLink: ViewLink;
   quantityShownCards: QuantityCards;
 };
+
+
 
 export type AppDispatch = typeof store.dispatch;

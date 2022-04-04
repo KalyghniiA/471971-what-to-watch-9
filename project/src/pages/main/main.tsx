@@ -10,7 +10,7 @@ import ServerFailed from '../../components/server-failed/server-failed';
 
 function Main() {
   const dispatch = useAppDispatch();
-  const { promoFilm, isFilmsStatus, isPromoFilmStatus } = useAppSelector(({ DATA }) => DATA);
+  const { promoFilm, isFilmsStatus, isPromoFilmStatus } = useAppSelector(({ FILM_DATA }) => FILM_DATA);
 
   useEffect(() => {
     dispatch(resetShownCards());

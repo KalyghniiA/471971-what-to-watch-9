@@ -95,6 +95,8 @@ export enum LoadingStatus {
 
 export enum NameSpase {
   login = 'LOGIN',
-  data = 'DATA',
+  filmData = 'FILM_DATA',
+  favoriteFilmData = 'FAVORITE_FILM_DATA',
+  reviewData = 'REVIEW_DATA',
   app = 'APP',
 }

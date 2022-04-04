@@ -1,9 +1,12 @@
 import Logo from '../logo/logo';
-import UserBlock from '../user-block/user-block';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppRoute, AuthorizationStatus, ViewLink } from '../../const';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import { getAvatarUrl } from '../../services/avatarUrl';
+import { selectViewLink } from '../../store/app-process/app-process';
+import { fetchFavoriteFilmsAction } from '../../store/favorite-film-data-process/favorite-film-data-process';
+import { logoutAction } from '../../store/user-process/user-process';
 
 function UserBlockNoAuth(): JSX.Element {
   return (
@@ -12,6 +15,40 @@ function UserBlockNoAuth(): JSX.Element {
         Sign in
       </Link>
     </div>
+  );
+}
+
+function UserBlockAuth(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const avatarUrl = getAvatarUrl();
+
+  return (
+    <ul className="user-block">
+      <li className="user-block__item">
+        <div className="user-block__avatar">
+          <Link
+            to={AppRoute.MyList}
+            onClick={() => {
+              dispatch(selectViewLink(ViewLink.List));
+              dispatch(fetchFavoriteFilmsAction());
+            }}
+          >
+            <img src={avatarUrl} alt="User avatar" width="63" height="63" />
+          </Link>
+        </div>
+      </li>
+      <li className="user-block__item">
+        <a
+          className="user-block__link"
+          onClick={(evt) => {
+            evt.preventDefault();
+            dispatch(logoutAction());
+          }}
+        >
+          Sign out
+        </a>
+      </li>
+    </ul>
   );
 }
 
@@ -29,7 +66,7 @@ function Header(): JSX.Element {
       <Logo />
       {activeLink === ViewLink.List && <h1 className="page-title user-page__title">My list</h1>}
       {authorizationStatus !== AuthorizationStatus.Auth && <UserBlockNoAuth />}
-      {authorizationStatus === AuthorizationStatus.Auth && <UserBlock />}
+      {authorizationStatus === AuthorizationStatus.Auth && <UserBlockAuth />}
     </header>
   );
 }

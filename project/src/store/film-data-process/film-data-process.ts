@@ -1,121 +1,133 @@
-import { LoadingStatus, NameSpase } from '../../const';
-import { createSlice } from '@reduxjs/toolkit';
-import { InitialStateFilmDataProcess } from '../../types/state';
+import { APIRoute, LoadingStatus, NameSpase } from '../../const';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { AppDispatch, InitialStateFilmDataProcess, State } from '../../types/state';
+import { Film as FilmType } from '../../types/film';
+import { errorHandle } from '../../services/error-handle';
+import { redirectToRoute } from '../action';
+import { AxiosInstance } from 'axios';
 
 const initialState: InitialStateFilmDataProcess = {
   films: [],
   promoFilm: null,
   film: null,
   similarFilms: [],
-  favoriteFilms: [],
-  reviews: [],
   isFilmsStatus: LoadingStatus.IDLE,
   isFilmStatus: LoadingStatus.IDLE,
   isSimilarFilmsStatus: LoadingStatus.IDLE,
   isPromoFilmStatus: LoadingStatus.IDLE,
-  isFavoriteFilmsStatus: LoadingStatus.IDLE,
-  isReviewsStatus: LoadingStatus.IDLE,
-  isPostingCommentStatus: LoadingStatus.IDLE,
 };
 
+export const fetchFilmsAction = createAsyncThunk<FilmType[], undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>('data/fetchFilms', async (_arg,{extra: api}) => {
+  try {
+    const { data } = await api.get<FilmType[]>(APIRoute.films());
+    return data;
+  } catch (err) {
+    errorHandle(err);
+    throw err;
+  }
+});
+
+export const fetchFilmAction = createAsyncThunk<FilmType, number, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>('data/fetchFilm', async (id, {dispatch, extra: api}) => {
+  try {
+    const { data } = await api.get<FilmType>(APIRoute.film(id));
+    return data;
+  } catch (err) {
+    errorHandle(err);
+    dispatch(redirectToRoute('/404'));
+    throw err;
+  }
+});
+
+export const fetchPromoFilmAction = createAsyncThunk<FilmType, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>('data/fetchPromoFilm', async (_arg,{extra: api}) => {
+  try {
+    const { data } = await api.get<FilmType>(APIRoute.promo());
+    return data;
+  } catch (err) {
+    errorHandle(err);
+    throw err;
+  }
+});
+
+export const fetchSimilarFilmsAction = createAsyncThunk<FilmType[], number, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>('data/fetchSimilarFilms', async (id, { extra: api}) => {
+  try {
+    const { data } = await api.get<FilmType[]>(APIRoute.similarFilms(id));
+    return data;
+  } catch (err) {
+    errorHandle(err);
+    throw err;
+  }
+});
+
 export const filmDataProcess = createSlice({
-  name: NameSpase.data,
+  name: NameSpase.filmData,
   initialState,
   reducers: {
-    loadingFilms: (state) => {
-      state.isFilmsStatus = LoadingStatus.LOADING;
-    },
-    loadFilms: (state, action) => {
-      state.films = action.payload;
-      state.isFilmsStatus = LoadingStatus.SUCCEEDED;
-    },
-    errorLoadFilms: (state) => {
-      state.isFilmsStatus = LoadingStatus.FAILED;
-    },
-    loadingPromoFilm: (state) => {
-      state.isPromoFilmStatus = LoadingStatus.LOADING;
-    },
-    loadPromoFilm: (state, action) => {
-      state.promoFilm = action.payload;
-      state.isPromoFilmStatus = LoadingStatus.SUCCEEDED;
-    },
-    errorLoadPromoFilm: (state) => {
-      state.isPromoFilmStatus = LoadingStatus.FAILED;
-    },
-    loadingFilm: (state) => {
-      state.isFilmStatus = LoadingStatus.LOADING;
-    },
-    loadFilm: (state, action) => {
-      state.film = action.payload;
-      state.isFilmStatus = LoadingStatus.SUCCEEDED;
-    },
-    loadingSimilarFilms: (state) => {
-      state.isSimilarFilmsStatus = LoadingStatus.LOADING;
-    },
-    loadSimilarFilms: (state, action) => {
-      state.similarFilms = action.payload;
-      state.isSimilarFilmsStatus = LoadingStatus.SUCCEEDED;
-    },
-    loadingFavoriteFilms: (state) => {
-      state.isFavoriteFilmsStatus = LoadingStatus.LOADING;
-    },
-    loadFavoriteFilms: (state, action) => {
-      state.favoriteFilms = action.payload;
-      state.isFavoriteFilmsStatus = LoadingStatus.SUCCEEDED;
-    },
-    loadingReviews: (state) => {
-      state.isReviewsStatus = LoadingStatus.LOADING;
-    },
-    loadReviews: (state, action) => {
-      state.reviews = action.payload;
-      state.isReviewsStatus = LoadingStatus.SUCCEEDED;
-    },
     resetLoadDataStatus: (state) => {
       state.film = null;
       state.similarFilms = [];
-      state.reviews = [];
       state.isFilmStatus = LoadingStatus.IDLE;
       state.isSimilarFilmsStatus = LoadingStatus.IDLE;
-      state.isReviewsStatus = LoadingStatus.IDLE;
     },
-    postingReview: (state) => {
-      state.isReviewsStatus = LoadingStatus.LOADING;
-    },
-    updateReviewsData: (state, action) => {
-      state.reviews = action.payload;
-      state.isReviewsStatus = LoadingStatus.SUCCEEDED;
-    },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(fetchFilmsAction.pending, (state) => {
+        state.isFilmsStatus = LoadingStatus.LOADING;
+      })
+      .addCase(fetchFilmsAction.fulfilled, (state, { payload }) => {
+        state.films = payload;
+        state.isFilmsStatus = LoadingStatus.SUCCEEDED;
+      })
+      .addCase(fetchFilmsAction.rejected, (state) => {
+        state.isFilmsStatus = LoadingStatus.FAILED;
+      })
+      .addCase(fetchFilmAction.pending, (state) => {
+        state.isFilmStatus = LoadingStatus.LOADING;
+      })
+      .addCase(fetchFilmAction.fulfilled, (state, { payload }) => {
+        state.film = payload;
+        state.isFilmStatus = LoadingStatus.SUCCEEDED;
+      })
+      .addCase(fetchFilmAction.rejected, (state) => {
+        state.isFilmStatus = LoadingStatus.FAILED;
+      })
+      .addCase(fetchPromoFilmAction.pending, (state) => {
+        state.isPromoFilmStatus = LoadingStatus.LOADING;
+      })
+      .addCase(fetchPromoFilmAction.fulfilled, (state, { payload }) => {
+        state.promoFilm = payload;
+        state.isPromoFilmStatus = LoadingStatus.SUCCEEDED;
+      })
+      .addCase(fetchPromoFilmAction.rejected, (state) => {
+        state.isPromoFilmStatus = LoadingStatus.FAILED;
+      })
+      .addCase(fetchSimilarFilmsAction.pending, (state) => {
+        state.isSimilarFilmsStatus = LoadingStatus.LOADING;
+      })
+      .addCase(fetchSimilarFilmsAction.fulfilled, (state, { payload }) => {
+        state.similarFilms = payload;
+        state.isSimilarFilmsStatus = LoadingStatus.SUCCEEDED;
+      })
+      .addCase(fetchSimilarFilmsAction.rejected, (state) => {
+        state.isSimilarFilmsStatus = LoadingStatus.FAILED;
+      });
   },
 });
 
-export const {
-  loadFilm,
-  loadingFilm,
-  loadFilms,
-  loadingFilms,
-  errorLoadFilms,
-  loadPromoFilm,
-  loadingPromoFilm,
-  errorLoadPromoFilm,
-  loadFavoriteFilms,
-  loadingFavoriteFilms,
-  loadSimilarFilms,
-  loadingSimilarFilms,
-  loadReviews,
-  loadingReviews,
-  postingReview,
-  updateReviewsData,
-  resetLoadDataStatus,
-} = filmDataProcess.actions;
-
-/* .addCase(updateIsFavoriteFilm, (state, action) => {
-    const index = state.films.findIndex((film) => film.id === action.payload.id);
-    if (index !== -1) {
-      state.films[index].isFavorite = action.payload.isFavorite;
-    }
-  })
-  .addCase(updateIsFavoritePromoFilm, (state, action) => {
-    if (state.promoFilm !== null) {
-      state.promoFilm.isFavorite = action.payload.isFavorite;
-    }
-  });*/
+export const { resetLoadDataStatus } = filmDataProcess.actions;

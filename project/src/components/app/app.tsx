@@ -13,7 +13,7 @@ import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
-  const { films } = useAppSelector(({ DATA }) => DATA);
+  const { films } = useAppSelector(({ FILM_DATA }) => FILM_DATA);
   const { authorizationStatus } = useAppSelector(({ LOGIN }) => LOGIN);
 
   return (

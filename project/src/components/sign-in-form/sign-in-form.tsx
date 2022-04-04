@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { AuthData } from '../../types/auth-data';
-import { loginAction } from '../../store/api-actions';
 import { formErrorProps, FormStateProps } from '../../types/sign-in-form';
 import classNames from 'classnames';
+import { loginAction } from '../../store/user-process/user-process';
 
 const formFields = {
   email: 'Email address',

@@ -2,13 +2,19 @@ import FilmHero from '../../components/film-hero/film-hero';
 import FilmInfo from '../../components/film-info/film-info';
 import Catalog from '../../components/catalog/catalog';
 import Footer from '../../components/footer/footer';
-import { CatalogClassName, CatalogTitle, LoadingStatus } from '../../const';
+import { CatalogClassName, CatalogTitle, LoadingStatus, ViewLink } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Preloader from '../../components/preloader/preloader';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchCommentsAction, fetchFilmAction, fetchSimilarFilmsAction } from '../../store/api-actions';
-import { resetLoadDataStatus } from '../../store/film-data-process/film-data-process';
+import {
+  fetchFilmAction,
+  fetchSimilarFilmsAction,
+  resetLoadDataStatus
+} from '../../store/film-data-process/film-data-process';
+import { selectViewLink } from '../../store/app-process/app-process';
+import NotFound from '../not-found/not-found';
+import { fetchCommentsAction } from '../../store/review-data-process/review-data-process';
 
 function Film(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -18,23 +24,20 @@ function Film(): JSX.Element {
     dispatch(fetchFilmAction(Number(id)));
     dispatch(fetchSimilarFilmsAction(Number(id)));
     dispatch(fetchCommentsAction(Number(id)));
+    dispatch(selectViewLink(ViewLink.Card));
     return () => {
       dispatch(resetLoadDataStatus());
     };
   }, [id]);
 
-  const { film, isFilmStatus, isSimilarFilmsStatus, isReviewsStatus } = useAppSelector(({ DATA }) => DATA);
+  const { film, isFilmStatus } = useAppSelector(({ FILM_DATA }) => FILM_DATA);
 
-  if (
-    isFilmStatus === LoadingStatus.LOADING ||
-    isSimilarFilmsStatus === LoadingStatus.LOADING ||
-    isReviewsStatus === LoadingStatus.LOADING
-  ) {
+  if (isFilmStatus === LoadingStatus.LOADING) {
     return <Preloader />;
   }
 
   if (!film) {
-    return <Preloader />;
+    return <NotFound />;
   }
 
   return (

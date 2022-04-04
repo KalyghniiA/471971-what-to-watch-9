@@ -2,8 +2,8 @@ import { FormEvent, useState } from 'react';
 import { CommentLength, LoadingStatus } from '../../const';
 import { ReviewData } from '../../types/review';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { pushCommentAction } from '../../store/api-actions';
 import { useParams } from 'react-router-dom';
+import { postCommentAction } from '../../store/review-data-process/review-data-process';
 
 type RatingInputProps = {
   name: string;
@@ -35,7 +35,7 @@ function AddReviewForm(): JSX.Element {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
 
-  const { isReviewsStatus } = useAppSelector(({ DATA }) => DATA);
+  const { isReviewsStatus } = useAppSelector(({ REVIEW_DATA }) => REVIEW_DATA);
 
   const dispatch = useAppDispatch();
 
@@ -44,7 +44,7 @@ function AddReviewForm(): JSX.Element {
   };
 
   const onSubmit = (reviewData: ReviewData) => {
-    dispatch(pushCommentAction(reviewData));
+    dispatch(postCommentAction(reviewData));
   };
 
   const { id } = useParams();
