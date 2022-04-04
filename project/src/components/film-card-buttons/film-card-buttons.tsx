@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus, ViewLink } from '../../const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { FilmCardButtons as FilmCardButtonsTypes } from '../../types/film';
-import { updateIsFavoriteFilmAction } from '../../store/api-actions';
 
 function FilmCardButtons({ id, isFavorite }: FilmCardButtonsTypes): JSX.Element {
-  const { activeLink, authorizationStatus } = useAppSelector((state) => state);
+  const { activeLink } = useAppSelector(({ APP }) => APP);
+  const { authorizationStatus } = useAppSelector(({ LOGIN }) => LOGIN);
 
-  const dispatch = useAppDispatch();
+  /*const dispatch = useAppDispatch();
 
   const onClickMyList = () => {
     dispatch(
@@ -16,7 +16,7 @@ function FilmCardButtons({ id, isFavorite }: FilmCardButtonsTypes): JSX.Element 
         isFavorite: Number(!isFavorite),
       }),
     );
-  };
+  };*/
 
   return (
     <div className="film-card__buttons">
@@ -30,10 +30,10 @@ function FilmCardButtons({ id, isFavorite }: FilmCardButtonsTypes): JSX.Element 
         href="#"
         className="btn btn--list film-card__button"
         type="button"
-        onClick={(evt) => {
+        /*onClick={(evt) => {
           evt.preventDefault();
           onClickMyList();
-        }}
+        }}*/
       >
         {!isFavorite ? (
           <svg viewBox="0 0 19 20" width="19" height="20">

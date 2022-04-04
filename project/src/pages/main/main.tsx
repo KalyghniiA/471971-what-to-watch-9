@@ -1,22 +1,27 @@
 import FilmPromoCard from '../../components/film-promo-card/film-promo-card';
 import Catalog from '../../components/catalog/catalog';
-import { CatalogTitle, CatalogTitleClassName } from '../../const';
+import { CatalogTitle, CatalogTitleClassName, LoadingStatus } from '../../const';
 import Footer from '../../components/footer/footer';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { resetShownCards } from '../../store/action';
 import Preloader from '../../components/preloader/preloader';
+import { resetShownCards } from '../../store/app-process/app-process';
+import ServerFailed from '../../components/server-failed/server-failed';
 
 function Main() {
   const dispatch = useAppDispatch();
-  const { promoFilm, isFilmsDataLoaded, isPromoFilmDataLoaded } = useAppSelector((state) => state);
+  const { promoFilm, isFilmsStatus, isPromoFilmStatus } = useAppSelector(({ FILM_DATA }) => FILM_DATA);
 
   useEffect(() => {
     dispatch(resetShownCards());
   }, []);
 
-  if (!isFilmsDataLoaded && !isPromoFilmDataLoaded) {
+  if (isFilmsStatus === LoadingStatus.LOADING || isPromoFilmStatus === LoadingStatus.LOADING) {
     return <Preloader />;
+  }
+
+  if (isFilmsStatus === LoadingStatus.FAILED || isPromoFilmStatus === LoadingStatus.FAILED) {
+    return <ServerFailed />;
   }
 
   if (!promoFilm) {

@@ -5,24 +5,38 @@ import { AuthorizationStatus, LoadingStatus, QuantityCards, ViewLink } from '../
 
 export type State = ReturnType<typeof store.getState>;
 
-export type InitialState = {
-  activeGenre: string;
+export type InitialStateUserProcess = {
+  authorizationStatus: AuthorizationStatus;
+};
+
+export type InitialStateFilmDataProcess = {
   films: FilmType[];
   promoFilm: FilmType | null;
   film: FilmType | null;
   similarFilms: FilmType[];
+  isFilmsStatus: LoadingStatus;
+  isFilmStatus: LoadingStatus;
+  isSimilarFilmsStatus: LoadingStatus;
+  isPromoFilmStatus: LoadingStatus;
+};
+
+export type InitialStateFavoriteFilmDataProcess = {
   favoriteFilms: FilmType[];
+  isFavoriteFilmsStatus: LoadingStatus;
+};
+
+export type InitialStateReviewDataProcess = {
   reviews: ReviewType[];
-  activeLink: ViewLink;
-  quantityShownCards: QuantityCards;
-  authorizationStatus: AuthorizationStatus;
-  isFilmsDataLoaded: boolean;
-  isFilmDataLoaded: boolean;
-  isSimilarFilmsDataLoaded: boolean;
-  isPromoFilmDataLoaded: boolean;
-  isFavoriteFilmsDataLoaded: boolean;
-  isReviewsDataLoaded: boolean;
+  isReviewsStatus: LoadingStatus;
   isPostingCommentStatus: LoadingStatus;
 };
+
+export type InitialStateAppProcess = {
+  activeGenre: string;
+  activeLink: ViewLink;
+  quantityShownCards: QuantityCards;
+};
+
+
 
 export type AppDispatch = typeof store.dispatch;

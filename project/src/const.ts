@@ -92,3 +92,11 @@ export enum LoadingStatus {
   SUCCEEDED = 'SUCCEEDED',
   FAILED = 'FAILED',
 }
+
+export enum NameSpase {
+  login = 'LOGIN',
+  filmData = 'FILM_DATA',
+  favoriteFilmData = 'FAVORITE_FILM_DATA',
+  reviewData = 'REVIEW_DATA',
+  app = 'APP',
+}

@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import { checkAuthorization, fetchFilmsAction, fetchPromoFilmAction } from './store/api-actions';
 import { ToastContainer } from 'react-toastify';
+import { fetchFilmsAction, fetchPromoFilmAction } from './store/film-data-process/film-data-process';
+import 'react-toastify/dist/ReactToastify.css';
+import { checkAuthorization } from './store/user-process/user-process';
 
+store.dispatch(checkAuthorization());
 store.dispatch(fetchFilmsAction());
 store.dispatch(fetchPromoFilmAction());
-store.dispatch(checkAuthorization());
 
 ReactDOM.render(
   <React.StrictMode>

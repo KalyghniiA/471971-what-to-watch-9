@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, ViewLink } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { selectViewLink } from '../../store/action';
+import { selectViewLink } from '../../store/app-process/app-process';
 
 type LogoProps = {
   className?: string;

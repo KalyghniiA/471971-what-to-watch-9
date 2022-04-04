@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Main from '../../pages/main/main';
 import Film from '../../pages/film/film';
 import SignIn from '../../pages/sign-in/sign-in';
@@ -9,15 +9,12 @@ import NotFound from '../../pages/not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
 import AddReview from '../../pages/add-review/add-review';
 import { useAppSelector } from '../../hooks';
-import Preloader from '../preloader/preloader';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
-  const { films, isFilmsDataLoaded, authorizationStatus } = useAppSelector((state) => state);
-  if (!isFilmsDataLoaded) {
-    return <Preloader />;
-  }
+  const { films } = useAppSelector(({ FILM_DATA }) => FILM_DATA);
+  const { authorizationStatus } = useAppSelector(({ LOGIN }) => LOGIN);
 
   return (
     <HistoryRouter history={browserHistory}>
