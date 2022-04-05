@@ -1,11 +1,11 @@
 import FilmPromoCard from '../../components/film-promo-card/film-promo-card';
 import Catalog from '../../components/catalog/catalog';
-import { CatalogTitle, CatalogTitleClassName, LoadingStatus } from '../../const';
+import { CatalogTitle, CatalogTitleClassName, LoadingStatus, ViewLink } from '../../const';
 import Footer from '../../components/footer/footer';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Preloader from '../../components/preloader/preloader';
-import { resetShownCards } from '../../store/app-process/app-process';
+import { resetShownCards, selectViewLink } from '../../store/app-process/app-process';
 import ServerFailed from '../../components/server-failed/server-failed';
 
 function Main() {
@@ -14,6 +14,7 @@ function Main() {
 
   useEffect(() => {
     dispatch(resetShownCards());
+    dispatch(selectViewLink(ViewLink.Main));
   }, []);
 
   if (isFilmsStatus === LoadingStatus.LOADING || isPromoFilmStatus === LoadingStatus.LOADING) {

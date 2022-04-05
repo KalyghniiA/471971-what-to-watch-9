@@ -7,6 +7,7 @@ import { getAvatarUrl } from '../../services/avatarUrl';
 import { selectViewLink } from '../../store/app-process/app-process';
 import { fetchFavoriteFilmsAction } from '../../store/favorite-film-data-process/favorite-film-data-process';
 import { logoutAction } from '../../store/user-process/user-process';
+import Breadcrumbs from '../breadcrumbs/breadcrumbs';
 
 function UserBlockNoAuth(): JSX.Element {
   return (
@@ -65,6 +66,7 @@ function Header(): JSX.Element {
     <header className={headerClassName}>
       <Logo />
       {activeLink === ViewLink.List && <h1 className="page-title user-page__title">My list</h1>}
+      {activeLink === ViewLink.AddReview && <Breadcrumbs />}
       {authorizationStatus !== AuthorizationStatus.Auth && <UserBlockNoAuth />}
       {authorizationStatus === AuthorizationStatus.Auth && <UserBlockAuth />}
     </header>

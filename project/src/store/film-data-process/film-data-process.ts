@@ -5,6 +5,7 @@ import { Film as FilmType } from '../../types/film';
 import { errorHandle } from '../../services/error-handle';
 import { redirectToRoute } from '../action';
 import { AxiosInstance } from 'axios';
+import { updateIsFavoriteFilmAction } from '../favorite-film-data-process/favorite-film-data-process';
 
 const initialState: InitialStateFilmDataProcess = {
   films: [],
@@ -15,13 +16,18 @@ const initialState: InitialStateFilmDataProcess = {
   isFilmStatus: LoadingStatus.IDLE,
   isSimilarFilmsStatus: LoadingStatus.IDLE,
   isPromoFilmStatus: LoadingStatus.IDLE,
+  updateIsFavoriteFilmStatus: LoadingStatus.IDLE,
 };
 
-export const fetchFilmsAction = createAsyncThunk<FilmType[], undefined, {
-  dispatch: AppDispatch,
-  state: State,
-  extra: AxiosInstance
-}>('data/fetchFilms', async (_arg,{extra: api}) => {
+export const fetchFilmsAction = createAsyncThunk<
+  FilmType[],
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('data/fetchFilms', async (_arg, { extra: api }) => {
   try {
     const { data } = await api.get<FilmType[]>(APIRoute.films());
     return data;
@@ -31,11 +37,15 @@ export const fetchFilmsAction = createAsyncThunk<FilmType[], undefined, {
   }
 });
 
-export const fetchFilmAction = createAsyncThunk<FilmType, number, {
-  dispatch: AppDispatch,
-  state: State,
-  extra: AxiosInstance
-}>('data/fetchFilm', async (id, {dispatch, extra: api}) => {
+export const fetchFilmAction = createAsyncThunk<
+  FilmType,
+  number,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('data/fetchFilm', async (id, { dispatch, extra: api }) => {
   try {
     const { data } = await api.get<FilmType>(APIRoute.film(id));
     return data;
@@ -46,11 +56,15 @@ export const fetchFilmAction = createAsyncThunk<FilmType, number, {
   }
 });
 
-export const fetchPromoFilmAction = createAsyncThunk<FilmType, undefined, {
-  dispatch: AppDispatch,
-  state: State,
-  extra: AxiosInstance
-}>('data/fetchPromoFilm', async (_arg,{extra: api}) => {
+export const fetchPromoFilmAction = createAsyncThunk<
+  FilmType,
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('data/fetchPromoFilm', async (_arg, { extra: api }) => {
   try {
     const { data } = await api.get<FilmType>(APIRoute.promo());
     return data;
@@ -60,11 +74,15 @@ export const fetchPromoFilmAction = createAsyncThunk<FilmType, undefined, {
   }
 });
 
-export const fetchSimilarFilmsAction = createAsyncThunk<FilmType[], number, {
-  dispatch: AppDispatch,
-  state: State,
-  extra: AxiosInstance
-}>('data/fetchSimilarFilms', async (id, { extra: api}) => {
+export const fetchSimilarFilmsAction = createAsyncThunk<
+  FilmType[],
+  number,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('data/fetchSimilarFilms', async (id, { extra: api }) => {
   try {
     const { data } = await api.get<FilmType[]>(APIRoute.similarFilms(id));
     return data;
@@ -126,6 +144,23 @@ export const filmDataProcess = createSlice({
       })
       .addCase(fetchSimilarFilmsAction.rejected, (state) => {
         state.isSimilarFilmsStatus = LoadingStatus.FAILED;
+      })
+      .addCase(updateIsFavoriteFilmAction.fulfilled, (state, { payload }) => {
+        state.updateIsFavoriteFilmStatus = LoadingStatus.SUCCEEDED;
+        const index = state.films.findIndex((film) => film.id === payload.id);
+        if (index !== -1) {
+          state.films[index].isFavorite = payload.isFavorite;
+        }
+
+        if (index === state.promoFilm?.id) {
+          state.promoFilm = payload;
+        }
+      })
+      .addCase(updateIsFavoriteFilmAction.pending, (state) => {
+        state.updateIsFavoriteFilmStatus = LoadingStatus.LOADING;
+      })
+      .addCase(updateIsFavoriteFilmAction.rejected, (state) => {
+        state.updateIsFavoriteFilmStatus = LoadingStatus.FAILED;
       });
   },
 });

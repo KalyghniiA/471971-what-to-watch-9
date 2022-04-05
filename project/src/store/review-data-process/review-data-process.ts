@@ -12,11 +12,15 @@ const initialState: InitialStateReviewDataProcess = {
   isPostingCommentStatus: LoadingStatus.IDLE,
 };
 
-export const fetchCommentsAction = createAsyncThunk<ReviewType[], number, {
-  dispatch: AppDispatch,
-  state: State,
-  extra: AxiosInstance
-}>('data/fetchComments', async (id, {extra: api}) => {
+export const fetchCommentsAction = createAsyncThunk<
+  ReviewType[],
+  number,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('data/fetchComments', async (id, { extra: api }) => {
   try {
     const { data } = await api.get<ReviewType[]>(APIRoute.comments(id));
     return data;
@@ -26,11 +30,15 @@ export const fetchCommentsAction = createAsyncThunk<ReviewType[], number, {
   }
 });
 
-export const postCommentAction = createAsyncThunk<ReviewType[], ReviewData, {
-  dispatch: AppDispatch,
-  state: State,
-  extra: AxiosInstance
-}>('data/pushComment', async ({ comment, rating, id }, {dispatch, extra: api}) => {
+export const postCommentAction = createAsyncThunk<
+  ReviewType[],
+  ReviewData,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('data/pushComment', async ({ comment, rating, id }, { dispatch, extra: api }) => {
   try {
     const { data } = await api.post(APIRoute.comments(id), { comment, rating });
     dispatch(redirectToRoute(`${AppRoute.Film}/${id}`));

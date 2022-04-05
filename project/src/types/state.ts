@@ -18,6 +18,7 @@ export type InitialStateFilmDataProcess = {
   isFilmStatus: LoadingStatus;
   isSimilarFilmsStatus: LoadingStatus;
   isPromoFilmStatus: LoadingStatus;
+  updateIsFavoriteFilmStatus: LoadingStatus;
 };
 
 export type InitialStateFavoriteFilmDataProcess = {
@@ -36,7 +37,5 @@ export type InitialStateAppProcess = {
   activeLink: ViewLink;
   quantityShownCards: QuantityCards;
 };
-
-
 
 export type AppDispatch = typeof store.dispatch;

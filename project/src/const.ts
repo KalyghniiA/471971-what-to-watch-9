@@ -58,6 +58,7 @@ export enum ViewLink {
   Main = 'Main',
   Card = 'Card',
   List = 'List',
+  AddReview = 'AddReview',
 }
 
 export enum QuantityCards {
@@ -99,4 +100,10 @@ export enum NameSpase {
   favoriteFilmData = 'FAVORITE_FILM_DATA',
   reviewData = 'REVIEW_DATA',
   app = 'APP',
+  video = 'VIDEO',
+}
+
+export enum VideoPlaying {
+  Play = 'PLAY',
+  Pause = 'PAUSE',
 }
