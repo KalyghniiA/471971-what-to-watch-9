@@ -1,6 +1,6 @@
 import { APIRoute, AppRoute, AuthorizationStatus, NameSpase, ViewLink } from '../../const';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AppDispatch, InitialStateUserProcess, State } from '../../types/state';
+import { AppDispatch, State } from '../../types/state';
 import { AuthData } from '../../types/auth-data';
 import { UserData } from '../../types/user-data';
 import { dropToken, saveToken } from '../../services/token';
@@ -8,18 +8,25 @@ import { dropAvatarUrl, saveAvatarUrl } from '../../services/avatarUrl';
 import { selectViewLink } from '../app-process/app-process';
 import { redirectToRoute } from '../action';
 import { errorHandle } from '../../services/error-handle';
-import { Film as FilmType } from '../../types/film';
 import { AxiosInstance } from 'axios';
 
-const initialState: InitialStateUserProcess = {
+type InitialState = {
+  authorizationStatus: AuthorizationStatus;
+};
+
+const initialState: InitialState = {
   authorizationStatus: AuthorizationStatus.Unknown,
 };
 
-export const loginAction = createAsyncThunk<void, AuthData, {
-  dispatch: AppDispatch,
-  state: State,
-  extra: AxiosInstance
-}>('user/login', async ({ login: email, password }, {dispatch, extra: api}) => {
+export const loginAction = createAsyncThunk<
+  void,
+  AuthData,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('user/login', async ({ login: email, password }, { dispatch, extra: api }) => {
   try {
     const {
       data: { token, avatarUrl },
@@ -34,11 +41,15 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   }
 });
 
-export const logoutAction = createAsyncThunk<void, undefined, {
-  dispatch: AppDispatch,
-  state: State,
-  extra: AxiosInstance
-}>('user/logout', async (_, {dispatch, extra: api}) => {
+export const logoutAction = createAsyncThunk<
+  void,
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('user/logout', async (_, { dispatch, extra: api }) => {
   try {
     await api.delete(APIRoute.logout());
     dropToken();
@@ -50,11 +61,15 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   }
 });
 
-export const checkAuthorization = createAsyncThunk<void, undefined, {
-  dispatch: AppDispatch,
-  state: State,
-  extra: AxiosInstance
-}>('user/CheckAuthorization', async (_, {extra: api}) => {
+export const checkAuthorization = createAsyncThunk<
+  void,
+  undefined,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('user/CheckAuthorization', async (_, { extra: api }) => {
   try {
     const {
       data: { token, avatarUrl },
@@ -68,7 +83,7 @@ export const checkAuthorization = createAsyncThunk<void, undefined, {
 });
 
 export const userProcess = createSlice({
-  name: NameSpase.login,
+  name: NameSpase.Login,
   initialState,
   reducers: {},
   extraReducers(builder) {
@@ -90,3 +105,7 @@ export const userProcess = createSlice({
       });
   },
 });
+
+const selectAuthorizationStatusState = (state: State) => state[NameSpase.Login];
+
+export const selectAuthorizationStatus = (state: State) => selectAuthorizationStatusState(state).authorizationStatus;

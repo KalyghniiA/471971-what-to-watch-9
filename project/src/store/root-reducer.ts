@@ -7,9 +7,9 @@ import { appProcess } from './app-process/app-process';
 import { reviewDataProcess } from './review-data-process/review-data-process';
 
 export const rootReducer = combineReducers({
-  [NameSpase.app]: appProcess.reducer,
-  [NameSpase.filmData]: filmDataProcess.reducer,
-  [NameSpase.favoriteFilmData]: favoriteFilmDataProcess.reducer,
-  [NameSpase.reviewData]: reviewDataProcess.reducer,
-  [NameSpase.login]: userProcess.reducer,
+  [NameSpase.App]: appProcess.reducer,
+  [NameSpase.FilmData]: filmDataProcess.reducer,
+  [NameSpase.FavoriteFilmData]: favoriteFilmDataProcess.reducer,
+  [NameSpase.ReviewData]: reviewDataProcess.reducer,
+  [NameSpase.Login]: userProcess.reducer,
 });

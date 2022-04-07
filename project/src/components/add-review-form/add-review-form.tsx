@@ -3,7 +3,7 @@ import { CommentLength, LoadingStatus } from '../../const';
 import { ReviewData } from '../../types/review';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
-import { postCommentAction } from '../../store/review-data-process/review-data-process';
+import { postCommentAction, selectReviewStatus } from '../../store/review-data-process/review-data-process';
 
 type RatingInputProps = {
   name: string;
@@ -35,8 +35,7 @@ function AddReviewForm(): JSX.Element {
   const [rating, setRating] = useState(0);
   const [reviewText, setReviewText] = useState('');
 
-  const { isReviewsStatus } = useAppSelector(({ REVIEW_DATA }) => REVIEW_DATA);
-
+  const reviewStatus = useAppSelector(selectReviewStatus);
   const dispatch = useAppDispatch();
 
   const handleRatingChange = (id: number): void => {
@@ -69,15 +68,21 @@ function AddReviewForm(): JSX.Element {
           </div>
         </div>
         <div className="add-review__text">
-          <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" value={reviewText} onChange={(evt) => setReviewText(evt.target.value)}>
-          </textarea>
+          <textarea
+            className="add-review__textarea"
+            name="review-text"
+            id="review-text"
+            placeholder="Review text"
+            value={reviewText}
+            onChange={(evt) => setReviewText(evt.target.value)}
+          />
           <div className="add-review__submit">
             <button
               className="add-review__btn"
               type="submit"
               disabled={rating === 0 || reviewText.length < CommentLength.Min || reviewText.length > CommentLength.Max}
             >
-              {isReviewsStatus === LoadingStatus.LOADING ? 'Loading' : 'Post'}
+              {reviewStatus === LoadingStatus.Loading ? 'Loading' : 'Post'}
             </button>
           </div>
         </div>

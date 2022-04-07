@@ -1,7 +1,7 @@
 import { genres } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import classNames from 'classnames';
-import { resetShownCards, selectGenre } from '../../store/app-process/app-process';
+import { resetShownCards, selectGenre, selectStateActiveGenre } from '../../store/app-process/app-process';
 
 type GenreTabProps = {
   text: string;
@@ -9,7 +9,7 @@ type GenreTabProps = {
 };
 
 function GenreTab({ text, value }: GenreTabProps): JSX.Element {
-  const { activeGenre } = useAppSelector(({ APP }) => APP);
+  const activeGenre = useAppSelector(selectStateActiveGenre);
   const dispatch = useAppDispatch();
 
   return (

@@ -1,15 +1,21 @@
 import { genres, NameSpase, QuantityCards, STEP_SHOW_CARD, ViewLink } from '../../const';
 import { createSlice } from '@reduxjs/toolkit';
-import { InitialStateAppProcess } from '../../types/state';
+import { State } from '../../types/state';
 
-const initialState: InitialStateAppProcess = {
+type InitialState = {
+  activeGenre: string;
+  activeLink: ViewLink;
+  quantityShownCards: QuantityCards;
+};
+
+const initialState: InitialState = {
   activeGenre: genres['All Genres'],
   activeLink: ViewLink.Main,
   quantityShownCards: QuantityCards.Main,
 };
 
 export const appProcess = createSlice({
-  name: NameSpase.app,
+  name: NameSpase.App,
   initialState,
   reducers: {
     selectGenre: (state, action) => {
@@ -26,5 +32,11 @@ export const appProcess = createSlice({
     },
   },
 });
+
+const selectAppState = (state: State) => state[NameSpase.App];
+
+export const selectStateActiveGenre = (state: State) => selectAppState(state).activeGenre;
+export const selectStateActiveLink = (state: State) => selectAppState(state).activeLink;
+export const selectStateQuantityShownCards = (state: State) => selectAppState(state).quantityShownCards;
 
 export const { selectGenre, selectViewLink, increaseLimit, resetShownCards } = appProcess.actions;

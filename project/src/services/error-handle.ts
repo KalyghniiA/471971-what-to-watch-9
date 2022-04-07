@@ -12,13 +12,13 @@ export const errorHandle = (error: ErrorType): void => {
 
   if (response) {
     switch (response.status) {
-      case HttpCode.BAD_REQUEST:
+      case HttpCode.BadRequest:
         toast.info(response.data.error);
         break;
-      case HttpCode.UNAUTHORIZED:
+      case HttpCode.Unauthorized:
         toast.info(response.data.error);
         break;
-      case HttpCode.NOT_FOUND:
+      case HttpCode.NotFound:
         toast.info(response.data.error);
         break;
     }

@@ -1,26 +1,35 @@
 import FilmPromoCard from '../../components/film-promo-card/film-promo-card';
 import Catalog from '../../components/catalog/catalog';
-import { CatalogTitle, CatalogTitleClassName, LoadingStatus } from '../../const';
+import { CatalogTitle, CatalogTitleClassName, LoadingStatus, ViewLink } from '../../const';
 import Footer from '../../components/footer/footer';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Preloader from '../../components/preloader/preloader';
-import { resetShownCards } from '../../store/app-process/app-process';
+import { resetShownCards, selectViewLink } from '../../store/app-process/app-process';
 import ServerFailed from '../../components/server-failed/server-failed';
+import {
+  selectFilmsStatus,
+  selectPromoFilm,
+  selectPromoFilmStatus
+} from '../../store/film-data-process/film-data-process';
 
 function Main() {
   const dispatch = useAppDispatch();
-  const { promoFilm, isFilmsStatus, isPromoFilmStatus } = useAppSelector(({ FILM_DATA }) => FILM_DATA);
+
+  const promoFilm = useAppSelector(selectPromoFilm);
+  const filmsStatus = useAppSelector(selectFilmsStatus);
+  const promoFilmStatus = useAppSelector(selectPromoFilmStatus);
 
   useEffect(() => {
     dispatch(resetShownCards());
+    dispatch(selectViewLink(ViewLink.Main));
   }, []);
 
-  if (isFilmsStatus === LoadingStatus.LOADING || isPromoFilmStatus === LoadingStatus.LOADING) {
+  if (filmsStatus === LoadingStatus.Loading || promoFilmStatus === LoadingStatus.Loading) {
     return <Preloader />;
   }
 
-  if (isFilmsStatus === LoadingStatus.FAILED || isPromoFilmStatus === LoadingStatus.FAILED) {
+  if (filmsStatus === LoadingStatus.Failed || promoFilmStatus === LoadingStatus.Failed) {
     return <ServerFailed />;
   }
 

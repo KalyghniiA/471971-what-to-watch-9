@@ -10,7 +10,9 @@ import { useParams } from 'react-router-dom';
 import {
   fetchFilmAction,
   fetchSimilarFilmsAction,
-  resetLoadDataStatus
+  resetLoadDataStatus,
+  selectFilm,
+  selectFilmStatus
 } from '../../store/film-data-process/film-data-process';
 import { selectViewLink } from '../../store/app-process/app-process';
 import NotFound from '../not-found/not-found';
@@ -30,9 +32,10 @@ function Film(): JSX.Element {
     };
   }, [id]);
 
-  const { film, isFilmStatus } = useAppSelector(({ FILM_DATA }) => FILM_DATA);
+  const film = useAppSelector(selectFilm);
+  const filmStatus = useAppSelector(selectFilmStatus);
 
-  if (isFilmStatus === LoadingStatus.LOADING) {
+  if (filmStatus === LoadingStatus.Loading) {
     return <Preloader />;
   }
 

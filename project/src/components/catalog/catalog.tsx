@@ -4,6 +4,13 @@ import BtnShowMore from '../btn-show-more/btn-show-more';
 import { filterFilm } from '../../utils';
 import { useAppSelector } from '../../hooks';
 import { QuantityCards, ViewLink } from '../../const';
+import {
+  selectStateActiveGenre,
+  selectStateActiveLink,
+  selectStateQuantityShownCards
+} from '../../store/app-process/app-process';
+import { selectFilms, selectSimilarFilms } from '../../store/film-data-process/film-data-process';
+import { selectFavoriteFilms } from '../../store/favorite-film-data-process/favorite-film-data-process';
 
 type CatalogProps = {
   title: string;
@@ -13,9 +20,12 @@ type CatalogProps = {
 };
 
 function Catalog({ title, className = '', titleClass = '', isMainView = false }: CatalogProps): JSX.Element {
-  const { activeGenre, activeLink, quantityShownCards } = useAppSelector(({ APP }) => APP);
-  const { films, similarFilms } = useAppSelector(({ FILM_DATA }) => FILM_DATA);
-  const { favoriteFilms } = useAppSelector(({ FAVORITE_FILM_DATA }) => FAVORITE_FILM_DATA);
+  const activeGenre = useAppSelector(selectStateActiveGenre);
+  const activeLink = useAppSelector(selectStateActiveLink);
+  const quantityShownCards = useAppSelector(selectStateQuantityShownCards);
+  const films = useAppSelector(selectFilms);
+  const similarFilms = useAppSelector(selectSimilarFilms);
+  const favoriteFilms = useAppSelector(selectFavoriteFilms);
 
   const filmsData = isMainView ? filterFilm(films, activeGenre) : films;
 

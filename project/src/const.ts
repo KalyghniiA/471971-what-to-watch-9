@@ -58,6 +58,7 @@ export enum ViewLink {
   Main = 'Main',
   Card = 'Card',
   List = 'List',
+  AddReview = 'AddReview',
 }
 
 export enum QuantityCards {
@@ -80,23 +81,29 @@ export const APIRoute = {
 };
 
 export enum HttpCode {
-  BAD_REQUEST = 400,
-  UNAUTHORIZED = 401,
-  NOT_FOUND = 404,
+  BadRequest = 400,
+  Unauthorized = 401,
+  NotFound = 404,
 }
 
 export enum LoadingStatus {
   //'idle' | 'loading' | 'succeeded' | 'failed'
-  IDLE = 'IDLE',
-  LOADING = 'LOADING',
-  SUCCEEDED = 'SUCCEEDED',
-  FAILED = 'FAILED',
+  Idle = 'IDLE',
+  Loading = 'LOADING',
+  Succeeded = 'SUCCEEDED',
+  Failed = 'FAILED',
 }
 
 export enum NameSpase {
-  login = 'LOGIN',
-  filmData = 'FILM_DATA',
-  favoriteFilmData = 'FAVORITE_FILM_DATA',
-  reviewData = 'REVIEW_DATA',
-  app = 'APP',
+  Login = 'LOGIN',
+  FilmData = 'FILM_DATA',
+  FavoriteFilmData = 'FAVORITE_FILM_DATA',
+  ReviewData = 'REVIEW_DATA',
+  App = 'APP',
+  Video = 'VIDEO',
+}
+
+export enum VideoPlaying {
+  Play = 'PLAY',
+  Pause = 'PAUSE',
 }

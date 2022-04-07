@@ -11,10 +11,12 @@ import AddReview from '../../pages/add-review/add-review';
 import { useAppSelector } from '../../hooks';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
+import { selectFilms } from '../../store/film-data-process/film-data-process';
+import { selectAuthorizationStatus } from '../../store/user-process/user-process';
 
 function App(): JSX.Element {
-  const { films } = useAppSelector(({ FILM_DATA }) => FILM_DATA);
-  const { authorizationStatus } = useAppSelector(({ LOGIN }) => LOGIN);
+  const films = useAppSelector(selectFilms);
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
 
   return (
     <HistoryRouter history={browserHistory}>
