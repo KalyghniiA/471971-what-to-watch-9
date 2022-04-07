@@ -3,13 +3,19 @@ import { Review as ReviewType, ReviewData } from '../../types/review';
 import { APIRoute, AppRoute, LoadingStatus, NameSpase } from '../../const';
 import { errorHandle } from '../../services/error-handle';
 import { redirectToRoute } from '../action';
-import { AppDispatch, InitialStateReviewDataProcess, State } from '../../types/state';
+import { AppDispatch, State } from '../../types/state';
 import { AxiosInstance } from 'axios';
 
-const initialState: InitialStateReviewDataProcess = {
+type InitialState = {
+  reviews: ReviewType[];
+  reviewsStatus: LoadingStatus;
+  postingCommentStatus: LoadingStatus;
+};
+
+const initialState: InitialState = {
   reviews: [],
-  isReviewsStatus: LoadingStatus.IDLE,
-  isPostingCommentStatus: LoadingStatus.IDLE,
+  reviewsStatus: LoadingStatus.Idle,
+  postingCommentStatus: LoadingStatus.Idle,
 };
 
 export const fetchCommentsAction = createAsyncThunk<
@@ -50,37 +56,43 @@ export const postCommentAction = createAsyncThunk<
 });
 
 export const reviewDataProcess = createSlice({
-  name: NameSpase.reviewData,
+  name: NameSpase.ReviewData,
   initialState,
   reducers: {
     resetLoadReviewStatus: (state) => {
       state.reviews = [];
-      state.isReviewsStatus = LoadingStatus.IDLE;
+      state.reviewsStatus = LoadingStatus.Idle;
     },
   },
   extraReducers(builder) {
     builder
       .addCase(fetchCommentsAction.pending, (state) => {
-        state.isReviewsStatus = LoadingStatus.LOADING;
+        state.reviewsStatus = LoadingStatus.Loading;
       })
       .addCase(fetchCommentsAction.fulfilled, (state, { payload }) => {
         state.reviews = payload;
-        state.isReviewsStatus = LoadingStatus.SUCCEEDED;
+        state.reviewsStatus = LoadingStatus.Succeeded;
       })
       .addCase(fetchCommentsAction.rejected, (state) => {
-        state.isReviewsStatus = LoadingStatus.FAILED;
+        state.reviewsStatus = LoadingStatus.Failed;
       })
       .addCase(postCommentAction.pending, (state) => {
-        state.isPostingCommentStatus = LoadingStatus.LOADING;
+        state.postingCommentStatus = LoadingStatus.Loading;
       })
       .addCase(postCommentAction.fulfilled, (state, { payload }) => {
         state.reviews = payload;
-        state.isPostingCommentStatus = LoadingStatus.SUCCEEDED;
+        state.postingCommentStatus = LoadingStatus.Succeeded;
       })
       .addCase(postCommentAction.rejected, (state) => {
-        state.isPostingCommentStatus = LoadingStatus.FAILED;
+        state.postingCommentStatus = LoadingStatus.Failed;
       });
   },
 });
+
+const selectReviewsState = (state: State) => state[NameSpase.ReviewData];
+
+export const selectReview = (state: State) => selectReviewsState(state).reviews;
+export const selectReviewStatus = (state: State) => selectReviewsState(state).reviewsStatus;
+export const selectPostingReviewStatus = (state: State) => selectReviewsState(state).postingCommentStatus;
 
 export const { resetLoadReviewStatus } = reviewDataProcess.actions;

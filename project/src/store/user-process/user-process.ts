@@ -1,6 +1,6 @@
 import { APIRoute, AppRoute, AuthorizationStatus, NameSpase, ViewLink } from '../../const';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AppDispatch, InitialStateUserProcess, State } from '../../types/state';
+import { AppDispatch, State } from '../../types/state';
 import { AuthData } from '../../types/auth-data';
 import { UserData } from '../../types/user-data';
 import { dropToken, saveToken } from '../../services/token';
@@ -10,7 +10,11 @@ import { redirectToRoute } from '../action';
 import { errorHandle } from '../../services/error-handle';
 import { AxiosInstance } from 'axios';
 
-const initialState: InitialStateUserProcess = {
+type InitialState = {
+  authorizationStatus: AuthorizationStatus;
+};
+
+const initialState: InitialState = {
   authorizationStatus: AuthorizationStatus.Unknown,
 };
 
@@ -79,7 +83,7 @@ export const checkAuthorization = createAsyncThunk<
 });
 
 export const userProcess = createSlice({
-  name: NameSpase.login,
+  name: NameSpase.Login,
   initialState,
   reducers: {},
   extraReducers(builder) {
@@ -101,3 +105,7 @@ export const userProcess = createSlice({
       });
   },
 });
+
+const selectAuthorizationStatusState = (state: State) => state[NameSpase.Login];
+
+export const selectAuthorizationStatus = (state: State) => selectAuthorizationStatusState(state).authorizationStatus;

@@ -6,6 +6,7 @@ import { FilmCardTabsValue } from '../../const';
 import FilmDetails from '../film-details/film-details';
 import FilmReviews from '../film-reviews/film-reviews';
 import { useAppSelector } from '../../hooks';
+import { selectReview } from '../../store/review-data-process/review-data-process';
 
 type FilmInfoProps = {
   filmCardData: FilmType;
@@ -15,7 +16,7 @@ function FilmInfo({ filmCardData }: FilmInfoProps): JSX.Element {
   const [activeTab, setActiveTab] = useState<FilmCardTabsValue>(FilmCardTabsValue.Overview);
 
   const handleActiveValue = (value: FilmCardTabsValue): void => setActiveTab(value);
-  const { reviews } = useAppSelector(({ REVIEW_DATA }) => REVIEW_DATA);
+  const reviews = useAppSelector(selectReview);
   const { posterImage, name } = filmCardData;
 
   const getActiveTabContent = () => {

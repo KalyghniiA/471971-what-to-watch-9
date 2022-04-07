@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Film as FilmType } from '../../types/film';
 import { APIRoute, LoadingStatus, NameSpase } from '../../const';
 import { errorHandle } from '../../services/error-handle';
-import { AppDispatch, InitialStateFavoriteFilmDataProcess, State } from '../../types/state';
+import { AppDispatch, State } from '../../types/state';
 import { AxiosInstance } from 'axios';
 
 type FavoriteDataType = {
@@ -10,9 +10,16 @@ type FavoriteDataType = {
   isFavorite: number;
 };
 
-const initialState: InitialStateFavoriteFilmDataProcess = {
+type InitialState = {
+  favoriteFilms: FilmType[];
+  favoriteFilmsStatus: LoadingStatus;
+  updateIsFavoriteFilmStatus: LoadingStatus;
+};
+
+const initialState: InitialState = {
   favoriteFilms: [],
-  isFavoriteFilmsStatus: LoadingStatus.IDLE,
+  favoriteFilmsStatus: LoadingStatus.Idle,
+  updateIsFavoriteFilmStatus: LoadingStatus.Idle,
 };
 
 export const fetchFavoriteFilmsAction = createAsyncThunk<
@@ -52,29 +59,34 @@ export const updateIsFavoriteFilmAction = createAsyncThunk<
 });
 
 export const favoriteFilmDataProcess = createSlice({
-  name: NameSpase.favoriteFilmData,
+  name: NameSpase.FavoriteFilmData,
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
       .addCase(fetchFavoriteFilmsAction.pending, (state) => {
-        state.isFavoriteFilmsStatus = LoadingStatus.LOADING;
+        state.favoriteFilmsStatus = LoadingStatus.Loading;
       })
       .addCase(fetchFavoriteFilmsAction.fulfilled, (state, { payload }) => {
         state.favoriteFilms = payload;
-        state.isFavoriteFilmsStatus = LoadingStatus.SUCCEEDED;
+        state.favoriteFilmsStatus = LoadingStatus.Succeeded;
       })
       .addCase(fetchFavoriteFilmsAction.rejected, (state) => {
-        state.isFavoriteFilmsStatus = LoadingStatus.FAILED;
+        state.favoriteFilmsStatus = LoadingStatus.Failed;
+      })
+      .addCase(updateIsFavoriteFilmAction.pending, (state) => {
+        state.updateIsFavoriteFilmStatus = LoadingStatus.Loading;
+      })
+      .addCase(updateIsFavoriteFilmAction.fulfilled, (state) => {
+        state.updateIsFavoriteFilmStatus = LoadingStatus.Succeeded;
+      })
+      .addCase(updateIsFavoriteFilmAction.rejected, (state) => {
+        state.updateIsFavoriteFilmStatus = LoadingStatus.Failed;
       });
   },
 });
 
-/* .addCase(updateIsFavoriteFilm, (state, action) => {
+const selectFavoriteFilmsState = (state: State) => state[NameSpase.FavoriteFilmData];
 
-  })
-  .addCase(updateIsFavoritePromoFilm, (state, action) => {
-    if (state.promoFilm !== null) {
-      state.promoFilm.isFavorite = action.payload.isFavorite;
-    }
-  });*/
+export const selectFavoriteFilms = (state: State) => selectFavoriteFilmsState(state).favoriteFilms;
+export const selectFavoriteFilmsStatus = (state: State) => selectFavoriteFilmsState(state).favoriteFilmsStatus;

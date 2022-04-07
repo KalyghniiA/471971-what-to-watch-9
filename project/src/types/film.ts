@@ -20,5 +20,4 @@ export type Film = {
 
 export type FilmCardButtons = {
   id: number;
-  isFavorite: boolean;
 };

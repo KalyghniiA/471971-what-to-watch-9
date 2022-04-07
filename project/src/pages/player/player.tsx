@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { useEffect, useRef } from 'react';
-import { selectPlayingVideo } from '../../store/video-process/video-process';
-import { AppRoute, LoadingStatus, VideoPlaying, ViewLink } from '../../const';
-import { redirectToRoute } from '../../store/action';
+import { useAppSelector } from '../../hooks';
+import { useRef, useState } from 'react';
+import { LoadingStatus } from '../../const';
 import Preloader from '../../components/preloader/preloader';
-import NotFound from '../not-found/not-found';
+import { selectFilms, selectFilmStatus } from '../../store/film-data-process/film-data-process';
+import browserHistory from '../../browser-history';
+import ServerFailed from '../../components/server-failed/server-failed';
 
 type ButtonProps = {
   onChangeButton: () => void;
@@ -35,27 +35,33 @@ function PauseButton({ onChangeButton }: ButtonProps): JSX.Element {
 
 function Player(): JSX.Element {
   const { id } = useParams();
+  const [statusPlaying, setStatusPlaying] = useState(false);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [viewingPercentage, setViewingPercentage] = useState(0);
 
   const videoPlayerRef = useRef<HTMLVideoElement>(null);
+  const film = useAppSelector(selectFilms).find((filmData) => filmData?.id === Number(id));
+  const filmsStatus = useAppSelector(selectFilmStatus);
 
-  const { videoPlayingStatus } = useAppSelector(({ VIDEO }) => VIDEO);
-  const { activeLink } = useAppSelector(({ APP }) => APP);
-  const { films, isFilmsStatus } = useAppSelector(({ FILM_DATA }) => FILM_DATA);
+  const createFilmDuration = () => {
+    const differenceTime = duration - currentTime;
+    const hours = Math.floor(differenceTime / 60 / 60);
+    const minutes = Math.floor(differenceTime / 60) - hours * 60;
+    const seconds = Math.floor(differenceTime % 60);
 
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(selectPlayingVideo(VideoPlaying.Pause)); //пока так, в дальнейшем переделать на ретерн
-  }, []);
-
-  const handleChangePlayButton = () => {
-    dispatch(selectPlayingVideo(VideoPlaying.Play));
-    videoPlayerRef.current && videoPlayerRef.current.play();
+    return `-${[
+      hours.toString().padStart(2, '0'),
+      minutes.toString().padStart(2, '0'),
+      seconds.toString().padStart(2, '0'),
+    ].join(':')}`;
   };
 
-  const handleChangePauseButton = () => {
-    dispatch(selectPlayingVideo(VideoPlaying.Pause));
-    videoPlayerRef.current && videoPlayerRef.current.pause();
+  const handleChangePlayingButton = () => {
+    setStatusPlaying(!statusPlaying);
+    !statusPlaying
+      ? videoPlayerRef.current && videoPlayerRef.current.play()
+      : videoPlayerRef.current && videoPlayerRef.current.pause();
   };
 
   const handleClickFullScreen = () => {
@@ -63,29 +69,36 @@ function Player(): JSX.Element {
   };
 
   const handleClickToExit = () => {
-    switch (activeLink) {
-      case ViewLink.Main:
-        dispatch(redirectToRoute(AppRoute.Root));
-        break;
-      case ViewLink.Card:
-        dispatch(redirectToRoute(`${AppRoute.Film}/${id}`));
-        break;
-    }
+    browserHistory.back();
   };
 
-  if (isFilmsStatus === LoadingStatus.LOADING) {
+  const handleVideoLoadedMetaData = () => {
+    videoPlayerRef.current && setDuration(Number(videoPlayerRef.current.duration.toFixed()));
+  };
+
+  const handleCurrentTimeUpdate = () => {
+    videoPlayerRef.current && setCurrentTime(Number(videoPlayerRef.current.currentTime.toFixed()));
+    setViewingPercentage(Number(((currentTime / duration) * 100).toFixed()));
+  };
+
+  if (filmsStatus === LoadingStatus.Loading) {
     return <Preloader />;
   }
 
-  if (isFilmsStatus === LoadingStatus.FAILED) {
-    return <NotFound />;
+  if (!film) {
+    return <ServerFailed />;
   }
 
   return (
     <div className="player">
-      <video src={films[Number(id) - 1].videoLink} className="player__video" poster={films[Number(id) - 1].backgroundImage} ref={videoPlayerRef}>
-
-      </video>
+      <video
+        src={film.videoLink}
+        className="player__video"
+        poster={film.backgroundImage}
+        ref={videoPlayerRef}
+        onLoadedMetadata={handleVideoLoadedMetaData}
+        onTimeUpdate={handleCurrentTimeUpdate}
+      />
 
       <button type="button" className="player__exit" onClick={handleClickToExit}>
         Exit
@@ -93,19 +106,21 @@ function Player(): JSX.Element {
 
       <div className="player__controls">
         <div className="player__controls-row">
-          <div className="player__time">
-            <progress className="player__progress" value="30" max="100"></progress>
-            <div className="player__toggler" style={{ left: '30%' }}>
+          <div
+            className="player__time"
+          >
+            <progress className="player__progress" value={viewingPercentage} max="100"></progress>
+            <div className="player__toggler" style={{ left: `${viewingPercentage}%` }} draggable>
               Toggler
             </div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">{createFilmDuration()}</div>
         </div>
         <div className="player__controls-row">
-          {videoPlayingStatus === VideoPlaying.Play ? (
-            <PauseButton onChangeButton={handleChangePauseButton} />
+          {statusPlaying ? (
+            <PauseButton onChangeButton={handleChangePlayingButton} />
           ) : (
-            <PlayButton onChangeButton={handleChangePlayButton} />
+            <PlayButton onChangeButton={handleChangePlayingButton} />
           )}
           <div className="player__name">Transpotting</div>
 

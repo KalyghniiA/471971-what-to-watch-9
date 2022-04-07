@@ -4,9 +4,9 @@ import { AppRoute, AuthorizationStatus, ViewLink } from '../../const';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { getAvatarUrl } from '../../services/avatarUrl';
-import { selectViewLink } from '../../store/app-process/app-process';
+import { selectStateActiveLink, selectViewLink } from '../../store/app-process/app-process';
 import { fetchFavoriteFilmsAction } from '../../store/favorite-film-data-process/favorite-film-data-process';
-import { logoutAction } from '../../store/user-process/user-process';
+import { logoutAction, selectAuthorizationStatus } from '../../store/user-process/user-process';
 import Breadcrumbs from '../breadcrumbs/breadcrumbs';
 
 function UserBlockNoAuth(): JSX.Element {
@@ -54,8 +54,8 @@ function UserBlockAuth(): JSX.Element {
 }
 
 function Header(): JSX.Element {
-  const { activeLink } = useAppSelector(({ APP }) => APP);
-  const { authorizationStatus } = useAppSelector(({ LOGIN }) => LOGIN);
+  const activeLink = useAppSelector(selectStateActiveLink);
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
 
   const headerClassName = classNames('page-header', {
     'film-card__head': activeLink !== ViewLink.List,
