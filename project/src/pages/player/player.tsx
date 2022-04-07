@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { useRef, useState } from 'react';
 import { LoadingStatus } from '../../const';
@@ -6,6 +6,7 @@ import Preloader from '../../components/preloader/preloader';
 import { selectFilms, selectFilmStatus } from '../../store/film-data-process/film-data-process';
 import browserHistory from '../../browser-history';
 import ServerFailed from '../../components/server-failed/server-failed';
+import { createFilmDuration } from '../../utils';
 
 type ButtonProps = {
   onChangeButton: () => void;
@@ -35,27 +36,16 @@ function PauseButton({ onChangeButton }: ButtonProps): JSX.Element {
 
 function Player(): JSX.Element {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [statusPlaying, setStatusPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [viewingPercentage, setViewingPercentage] = useState(0);
 
   const videoPlayerRef = useRef<HTMLVideoElement>(null);
-  const film = useAppSelector(selectFilms).find((filmData) => filmData?.id === Number(id));
+  const film = useAppSelector(selectFilms)
+    .find((filmData) => filmData?.id === Number(id));
   const filmsStatus = useAppSelector(selectFilmStatus);
-
-  const createFilmDuration = () => {
-    const differenceTime = duration - currentTime;
-    const hours = Math.floor(differenceTime / 60 / 60);
-    const minutes = Math.floor(differenceTime / 60) - hours * 60;
-    const seconds = Math.floor(differenceTime % 60);
-
-    return `-${[
-      hours.toString().padStart(2, '0'),
-      minutes.toString().padStart(2, '0'),
-      seconds.toString().padStart(2, '0'),
-    ].join(':')}`;
-  };
 
   const handleChangePlayingButton = () => {
     setStatusPlaying(!statusPlaying);
@@ -69,7 +59,7 @@ function Player(): JSX.Element {
   };
 
   const handleClickToExit = () => {
-    browserHistory.back();
+    navigate(-1);
   };
 
   const handleVideoLoadedMetaData = () => {
@@ -114,7 +104,7 @@ function Player(): JSX.Element {
               Toggler
             </div>
           </div>
-          <div className="player__time-value">{createFilmDuration()}</div>
+          <div className="player__time-value">{createFilmDuration(duration, currentTime)}</div>
         </div>
         <div className="player__controls-row">
           {statusPlaying ? (
@@ -122,7 +112,7 @@ function Player(): JSX.Element {
           ) : (
             <PlayButton onChangeButton={handleChangePlayingButton} />
           )}
-          <div className="player__name">Transpotting</div>
+          <div className="player__name">{film.name}</div>
 
           <button type="button" className="player__full-screen" onClick={handleClickFullScreen}>
             <svg viewBox="0 0 27 27" width="27" height="27">
