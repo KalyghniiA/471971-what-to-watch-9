@@ -4,7 +4,6 @@ import { useRef, useState } from 'react';
 import { LoadingStatus } from '../../const';
 import Preloader from '../../components/preloader/preloader';
 import { selectFilms, selectFilmStatus } from '../../store/film-data-process/film-data-process';
-import browserHistory from '../../browser-history';
 import ServerFailed from '../../components/server-failed/server-failed';
 import { createFilmDuration } from '../../utils';
 
