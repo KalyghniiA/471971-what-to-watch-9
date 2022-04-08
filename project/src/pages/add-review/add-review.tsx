@@ -17,7 +17,7 @@ function AddReview({ filmsData }: AddReviewProps): JSX.Element {
 
   useEffect(() => {
     dispatch(selectViewLink(ViewLink.AddReview));
-  }, []);
+  }, [dispatch]);
 
   const film = filmsData.find((filmCard) => id && filmCard.id === +id);
   if (!film) {

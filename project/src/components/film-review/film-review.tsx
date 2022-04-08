@@ -1,11 +1,11 @@
 import { Review as ReviewType } from '../../types/review';
 import dayjs from 'dayjs';
 
-type FilmReview = {
+type FilmReviewProps = {
   review: ReviewType;
 };
 
-function FilmCardReview({ review }: FilmReview): JSX.Element {
+function FilmReview({ review }: FilmReviewProps): JSX.Element {
   const { user, comment, date, rating } = review;
 
   return (
@@ -26,4 +26,4 @@ function FilmCardReview({ review }: FilmReview): JSX.Element {
   );
 }
 
-export default FilmCardReview;
+export default FilmReview;

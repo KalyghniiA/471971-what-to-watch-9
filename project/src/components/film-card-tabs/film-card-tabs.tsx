@@ -20,7 +20,7 @@ function FilmCardTab({ activeValue, onActiveValue, value }: FilmCardTabProps): J
       })}
     >
       <a
-        href="#"
+        href="/#"
         className="film-nav__link"
         onClick={(evt) => {
           evt.preventDefault();

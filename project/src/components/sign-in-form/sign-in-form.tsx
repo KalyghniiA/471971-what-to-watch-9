@@ -26,7 +26,7 @@ function SignInForm(): JSX.Element {
       value: '',
       error: false,
       errorText: 'Please enter a valid password',
-      regex: new RegExp(/^([a-zA-Z0-9]{3,15})$/),
+      regex: new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{3,15}$/),
     },
   });
 
@@ -38,7 +38,7 @@ function SignInForm(): JSX.Element {
 
   const handleChangeForm = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    if (Object.values(inputState).find((state) => state.value !== '' && !state.error)) {
+    if (!Object.values(inputState).find((state) => state.value === '' || state.error)) {
       onSubmit({
         login: inputState['email'].value,
         password: inputState['password'].value,

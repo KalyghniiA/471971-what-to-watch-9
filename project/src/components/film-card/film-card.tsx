@@ -8,6 +8,8 @@ type FilmCardProps = {
   filmData: FilmType;
 };
 
+const VIDEO_START_TIMEOUT = 1000;
+
 function FilmCard({ filmData }: FilmCardProps): JSX.Element {
   const [active, setActive] = useState(false);
   const timerRef = useRef<null | ReturnType<typeof setTimeout>>(null);
@@ -24,7 +26,7 @@ function FilmCard({ filmData }: FilmCardProps): JSX.Element {
   );
 
   const handlerLaunchVideo = () => {
-    timerRef.current = setTimeout(() => setActive(true), 1000);
+    timerRef.current = setTimeout(() => setActive(true), VIDEO_START_TIMEOUT);
   };
 
   const handlerStopVideo = () => {

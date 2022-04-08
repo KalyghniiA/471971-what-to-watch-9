@@ -19,7 +19,7 @@ function GenreTab({ text, value }: GenreTabProps): JSX.Element {
       })}
     >
       <a
-        href="#"
+        href="/#"
         className="catalog__genres-link"
         onClick={(evt) => {
           evt.preventDefault();

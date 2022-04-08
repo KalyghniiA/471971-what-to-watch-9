@@ -1,4 +1,4 @@
-import FilmCardReview from '../film-review/film-review';
+import FilmReview from '../film-review/film-review';
 import { Review as ReviewType } from '../../types/review';
 
 type FilmCardReviewsProps = {
@@ -12,12 +12,12 @@ function FilmReviews({ reviews }: FilmCardReviewsProps): JSX.Element {
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
         {reviews.slice(0, middleIndex).map((review) => (
-          <FilmCardReview review={review} key={review.id} />
+          <FilmReview review={review} key={review.id} />
         ))}
       </div>
       <div className="film-card__reviews-col">
         {reviews.slice(middleIndex).map((review) => (
-          <FilmCardReview review={review} key={review.id} />
+          <FilmReview review={review} key={review.id} />
         ))}
       </div>
     </div>

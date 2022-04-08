@@ -87,7 +87,6 @@ export enum HttpCode {
 }
 
 export enum LoadingStatus {
-  //'idle' | 'loading' | 'succeeded' | 'failed'
   Idle = 'IDLE',
   Loading = 'LOADING',
   Succeeded = 'SUCCEEDED',
@@ -107,3 +106,26 @@ export enum VideoPlaying {
   Play = 'PLAY',
   Pause = 'PAUSE',
 }
+
+export const FilmGrade = {
+  Bad: {
+    MIN: 0,
+    MAX: 2,
+  },
+  Normal: {
+    MIN: 2,
+    MAX: 4,
+  },
+  Good: {
+    MIN: 4,
+    MAX: 6,
+  },
+  VeryGood: {
+    MIN: 6,
+    MAX: 8,
+  },
+  Awesome: {
+    MIN: 8,
+    MAX: 10,
+  },
+};

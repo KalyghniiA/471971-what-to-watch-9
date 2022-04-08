@@ -23,7 +23,7 @@ function Main() {
   useEffect(() => {
     dispatch(resetShownCards());
     dispatch(selectViewLink(ViewLink.Main));
-  }, []);
+  }, [dispatch]);
 
   if (filmsStatus === LoadingStatus.Loading || promoFilmStatus === LoadingStatus.Loading) {
     return <Preloader />;

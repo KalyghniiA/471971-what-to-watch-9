@@ -1,4 +1,5 @@
 import { Film as FilmType } from '../../types/film';
+import { FilmGrade } from '../../const';
 
 type FilmOverviewProps = {
   filmData: FilmType;
@@ -6,15 +7,15 @@ type FilmOverviewProps = {
 
 const createGrade = (rating: number) => {
   switch (true) {
-    case rating <= 2:
+    case rating <= FilmGrade.Bad.MIN:
       return 'Bad';
-    case rating > 2 && rating <= 4:
+    case rating > FilmGrade.Normal.MIN && rating <= FilmGrade.Normal.MAX:
       return 'Normal';
-    case rating > 4 && rating <= 6:
+    case rating > FilmGrade.Good.MIN && rating <= FilmGrade.Good.MAX:
       return 'Good';
-    case rating > 6 && rating <= 8:
+    case rating > FilmGrade.VeryGood.MIN && rating <= FilmGrade.VeryGood.MAX:
       return 'Very good';
-    case rating > 8 && rating <= 10:
+    case rating > FilmGrade.Awesome.MIN && rating <= FilmGrade.Awesome.MAX:
       return 'Awesome';
   }
 };

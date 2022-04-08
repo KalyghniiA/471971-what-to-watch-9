@@ -39,7 +39,7 @@ function UserBlockAuth(): JSX.Element {
         </div>
       </li>
       <li className="user-block__item">
-        <a
+        <button
           className="user-block__link"
           onClick={(evt) => {
             evt.preventDefault();
@@ -47,7 +47,7 @@ function UserBlockAuth(): JSX.Element {
           }}
         >
           Sign out
-        </a>
+        </button>
       </li>
     </ul>
   );

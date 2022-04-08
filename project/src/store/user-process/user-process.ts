@@ -9,6 +9,7 @@ import { selectViewLink } from '../app-process/app-process';
 import { redirectToRoute } from '../action';
 import { errorHandle } from '../../services/error-handle';
 import { AxiosInstance } from 'axios';
+import { fetchFilmsAction, fetchPromoFilmAction } from '../film-data-process/film-data-process';
 
 type InitialState = {
   authorizationStatus: AuthorizationStatus;
@@ -54,6 +55,8 @@ export const logoutAction = createAsyncThunk<
     await api.delete(APIRoute.logout());
     dropToken();
     dropAvatarUrl();
+    dispatch(fetchPromoFilmAction());
+    dispatch(fetchFilmsAction());
     dispatch(redirectToRoute(AppRoute.Root));
   } catch (err) {
     errorHandle(err);

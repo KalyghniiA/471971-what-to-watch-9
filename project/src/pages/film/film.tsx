@@ -30,7 +30,7 @@ function Film(): JSX.Element {
     return () => {
       dispatch(resetLoadDataStatus());
     };
-  }, [id]);
+  }, [id, dispatch]);
 
   const film = useAppSelector(selectFilm);
   const filmStatus = useAppSelector(selectFilmStatus);

@@ -17,7 +17,7 @@ function Breadcrumbs(): JSX.Element {
           </Link>
         </li>
         <li className="breadcrumbs__item">
-          <a className="breadcrumbs__link">Add review</a>
+          <a href="/#" className="breadcrumbs__link">Add review</a>
         </li>
       </ul>
     </nav>
